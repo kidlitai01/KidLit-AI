@@ -12,14 +12,16 @@
   align-items: flex-start;
   padding: 0.5rem;
   padding: 1rem;
+  overflow: hidden;
 }
 
   .app-headerp{
       display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 2rem;
+  margin-top: 20px;
+  margin-bottom: 1rem;
+  margin-left: 30px;
   transform: scale(0.8);
   opacity: 0;
   animation: popBubble 0.6s ease-out forwards;
@@ -293,56 +295,82 @@
   object-fit: contain;
 }
 
+.sidebar-toggle{
+  display: none;
+}
+
 @media (max-width: 768px) {
 
-  .robot-sectionp{
+  .sidebar-toggle{
+  display: block;
+}
+  /* Hide robot section on mobile */
+  .robot-sectionp {
     display: none;
   }
 
   .cover1-bg {
-  background: url("./assets/firstpage1.png") no-repeat center center;
-  background-size: cover;
-}
-
-/* Story pages background */
-.story-bg {
-  background: url("./assets/default1.png") no-repeat center center;
-  background-size: cover;
-}
-
-/* Last page background */
-.end-bg {
-  background: url("./assets/lastpage1.png") no-repeat center center;
-  background-size: cover;
-}
-.page-imgp{
-    width: 100px;     /* adjust as needed */
-  height: 100px;    /* make width ≠ height for ellipse */
-  object-fit: cover; /* ensures image fits nicely */
-
-}
-
-  .left-img-layout {
-    flex-direction: column;  /* stack image + text vertically */
-    gap: 1rem;
+    background: url("./assets/firstpage1.png") no-repeat center center;
+    background-size: cover;
   }
 
-  .story-boxp{
-    width: 300px;
-    height: 500px;
+  .story-bg {
+    background: url("./assets/default1.png") no-repeat center center;
+    background-size: cover;
   }
 
-  .story-textp{
-    width: 300px;
-    height: 600px;
-    font-size: 15px;
-  }
-  .page-boxp{
-    width: 250px;
-    margin-top: 100px;
+  .end-bg {
+    background: url("./assets/lastpage1.png") no-repeat center center;
+    background-size: cover;
   }
 
+  .story-boxp {
+    width: 400px;     
+    height: 500px;    
+    margin: 0 auto;   
+  }
+
+  .page-boxp {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;     
+    align-items: flex-start;
+  }
+
+  .page-imgp {
+    width: 95px;
+    height: 140px;
+    margin-top: -227px;
+    border-radius: 8px;
+    object-fit: fill;
+    flex-shrink: 0;      
+  }
+
+  .story-textp {
+    font-size: 12px;
+    line-height: 1.5;
+    background-color: #ffeed1;
+    border-radius: 20px;
+    width: 148px;
+    padding: 10px;
+  }
+  .story-titlep {
+    margin-top: 265px;
+  }
+
+  .about-iconp{
+    width: 37px;
+  height: 37px;
+  margin-top: 50px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-items: center;
 
 
+}
 
 }
