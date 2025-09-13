@@ -8,6 +8,10 @@ const Picturebook = () => {
   const [fade, setFade] = useState(true);
   const [error, setError] = useState("");
 
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+
   useEffect(() => {
     // ✅ Fetch story from localStorage
     const data = localStorage.getItem("picturebookStory");
@@ -62,7 +66,8 @@ const Picturebook = () => {
     }
   }, [currentPageIndex]);
 
-    useEffect(() => {
+  // ✅ Keyboard navigation
+  useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowRight" || e.key === " ") handleNext();
       else if (e.key === "ArrowLeft") handlePrev();
@@ -78,6 +83,29 @@ const Picturebook = () => {
   const isLastPage = currentPage.type === "end";
 
   return (
+       <div>
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+        ☰
+      </button>
+      {/* Sidebar toggle button */}
+      <button 
+        className="sidebar-toggle" 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        ☰
+      </button>
+      
+      {/* Sidebar menu */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                    <div className="btn-wrapper">
+      
+                          <Link to="/AboutUs" className="about-btns">
+                          <img src="/about.png" alt="about" className="about-iconp" />
+                  </Link>
+                                          <span className="tooltips4">About us</span>
+                  </div>
+                  </div>
+    
     <div>
       <header className="app-headerp">
         <Link to="/" className="logo-link">
@@ -86,7 +114,6 @@ const Picturebook = () => {
             <h1 className="logo-text">KidLit Ai</h1>
           </div>
         </Link>
-        <Link to="/AboutUs" className="about-btn">About Us</Link>
       </header>
 
       <div className="main-bodyp">
@@ -131,6 +158,7 @@ const Picturebook = () => {
         <button onClick={handlePrev} disabled={currentPageIndex === 0}>&lt;</button>
         <button onClick={handleNext} disabled={isLastPage}>&gt;</button>
       </div>
+    </div>
     </div>
   );
 };
