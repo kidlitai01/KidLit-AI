@@ -1,0 +1,198 @@
+body.audio-theme{
+  padding: 0.8rem;
+}
+
+
+.audio-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  background: #ffe6f0;
+  min-height: 100vh;
+  font-family: 'HeyComic';
+  font-weight: 100;
+}
+
+.story-head {
+  background: #fff8f0;
+  border-radius: 20px;
+  border: 3px solid black;
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* Story card */
+.story-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1rem;
+  size: fixed;
+  width: 600px;
+  height: 450px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  margin-top: -50px;
+  border: 3px solid #000000;
+}
+
+/* Title */
+.story-heading {
+  font-size: 2rem;
+  color: #ff4081;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Story text container */
+.story-paragraph {
+  text-align:justify;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 2rem;
+
+  /* fixed box for exactly 10 lines */
+  min-height: calc(1.7em * 10);
+  max-height: calc(1.7em * 10);
+
+  white-space: pre-line;  /* preserve line breaks from JS */
+  overflow: visible;      /* ✅ don't hide text, JS handles pagination */
+}
+
+
+
+/* Each sentence */
+.sentence {
+  transition: all 0.4s ease;
+}
+
+/* Highlighted sentence */
+.active-sentence {
+  background: #ffebf2;
+  color: #d81b60;
+  font-weight: 100;
+  padding: 0.1rem 0.3rem;
+  border-radius: 8px;
+}
+
+/* Play button */
+.play-btn {
+  margin-top: -0.2rem;
+  padding: 2px;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+.play-btn:disabled {
+  cursor: not-allowed;
+}
+
+.control-icon {
+  width: 50px;   
+  height: 50px;
+}
+
+.reset-btn {
+  margin-left: 5px;
+  padding: 5px;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.reset-btn:hover {
+  transform: scale(1.05);
+}
+
+.reset-icon {
+  width: 40px;   
+  height: 40px;
+}
+
+
+.page-control {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  margin-left: 25px;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 28rem;
+  border: 2px solid #ff9595;
+  border-radius: 30px;
+  background-color: #fff8f0;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  padding: 10px 10px;
+  width: 350px;
+}
+
+.page-btn {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-control button:hover {
+  background-color: #ff6b6b;
+}
+
+.page-control button:disabled {
+  background-color: #ffd3d3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+
+
+  body.audio-theme{
+  padding: 1.5rem;
+}
+
+.story-card{
+  margin-top: -45px;
+  width: 350px;
+  height: 610px;
+}
+
+.story-head{
+  width: 300px;
+}
+
+.story-paragraph {
+  line-height: 1;
+}
+
+
+.page-control{
+  width: 300px;
+  margin-top: 31rem;
+margin-left: -10px;
+}
+
+
+
+
+
+
+}

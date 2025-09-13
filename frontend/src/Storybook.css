@@ -1,0 +1,345 @@
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body.book-theme{
+  padding: 0.8rem;
+}
+
+.main-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem;
+  padding: 1rem;
+}
+
+
+.robot-section {
+  flex: 1;
+  text-align: center;
+  padding-left: 3rem;
+}
+
+.robot-img {
+  width: 400px;
+  margin-top: 5rem;
+  margin-left: 200px;
+}
+
+.bubble {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  background-color: #ff9595;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  font-size: 1.3rem;
+  font-family: 'Fredoka', sans-serif;
+  margin-right: 130px;
+  padding: 10px 10px;
+  border-radius: 30px 30px 0px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 180px;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -12px; 
+  left: 20px;     
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top-color: #ff9595;
+}
+
+.audio-button-container {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.aud-button, .quiz-button , .download-button{
+  border: 1px solid rgba(0, 0, 0, 0);
+  padding: 3px 3px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); 
+}
+
+.aud-button :hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
+}
+
+
+.quiz-button :hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
+}
+
+.download-button :hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
+}
+
+.aud-icon,.quiz-icon{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-items: center;
+}
+
+.download-icon{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-items: center;
+
+}
+
+
+
+.btn-wrapper {
+  position: relative;
+  display: inline-block;
+
+}
+
+.tooltip {
+  position: absolute;
+  right: 5%;
+  top: 20%;
+  transform: translateX(-50%) translateY(10px);
+  background: #fff8e7;
+  border: 2px solid #ff9595;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: 'Fredoka', sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.tooltip2 {
+  position: absolute;
+  right: -10%;
+  top: 20%;
+  transform: translateX(-50%) translateY(10px);
+  background: #fff8e7;
+  border: 2px solid #ff9595;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: 'Fredoka', sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.tooltip3 {
+  position: absolute;
+  right: -20%;
+  top: 20%;
+  transform: translateX(-50%) translateY(10px);
+  background: #fff8e7;
+  border: 2px solid #ff9595;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: 'Fredoka', sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.btn-wrapper:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.btn-wrapper:hover .tooltip2 {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.btn-wrapper:hover .tooltip3 {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.story-box {
+  position: relative;
+  flex: 1;
+  max-width: 600px;
+  height: 400px;
+  margin-right: 1rem;
+  background-color: #fff8f0;
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #000000;
+  background: url('./assets/middlepage.png') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+/* First page overrides */
+.story-first-page {
+  background: url('./assets/firstpage.png') no-repeat center center !important;
+  background-size: cover !important;
+  color: #fff;
+}
+
+/* Last page overrides */
+.story-last-page {
+  background: url('./assets/lastpage.png') no-repeat center center !important;
+  background-size: cover !important;
+  color: #fff;
+}
+
+
+.story-content {
+  font-weight: bold;
+  margin-top: -80px;
+  width: 100%;
+  height: 100%;
+}
+
+.story-title {
+  font-family: 'jellee', cursive;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 260px;
+  font-weight: 100;
+  color: #65503D;  
+  text-align: center;
+}
+
+.story-text {
+  font-family: 'HeyComic', cursive;
+  font-size: 1.25rem;
+  margin: auto;
+  margin-top: 45px;
+  line-height: 1.7;
+  font-weight: 100;
+  width: 550px;
+  text-align: justify;
+  color: black;
+  padding: 1rem;
+  max-height: 100%;             
+  overflow: hidden;           
+  word-break: break-word;      
+}
+
+.story-end {
+  font-family: 'HeyComic', cursive;
+  font-size: 5rem;     
+  font-weight: 100;   
+  color: #000000;
+  text-align: center;
+  margin-top: 150px;
+  text-shadow: 1px 1px #000000;
+        text-shadow:  
+    -1px -1px 2px pink,
+     1px -1px 2px pink,
+    -1px  1px 2px pink,
+     1px  1px 2px pink;
+}
+
+
+
+
+
+
+.side-buttons {
+  position: absolute;
+  top: 100px;
+  right: -70px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.side-buttons button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  width: 60px;
+  transition: background-color 0.3s ease;
+}
+
+.side-buttons button:hover {
+  background-color: #ff6e6e;
+}
+
+.page-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 2rem;
+  font-family: 'Fredoka', sans-serif; 
+}
+
+.page-controls button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-controls button:hover {
+  background-color: #ff6b6b;
+}
+
+.page-controls button:disabled {
+  background-color: #ffd3d3;
+  cursor: not-allowed;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+
+
+
+

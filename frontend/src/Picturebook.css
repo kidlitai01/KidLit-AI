@@ -1,0 +1,348 @@
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.main-bodyp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem;
+  padding: 1rem;
+}
+
+  .app-headerp{
+      display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 2rem;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+  }
+
+
+
+.robot-sectionp {
+  flex: 1;
+  text-align: center;
+  padding-left: 3rem;
+}
+
+.robot-imgp {
+  width: 400px;
+  margin-top: 5rem;
+  margin-left: 200px;
+}
+
+.bubblep {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  background-color: #ff9595;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  font-size: 1.3rem;
+  font-family: 'Fredoka', sans-serif;
+  margin-right: 130px;
+  padding: 10px 10px;
+  border-radius: 30px 30px 0px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 180px;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+}
+
+.bubblep::after {
+  content: "";
+  position: absolute;
+  bottom: -12px; 
+  left: 20px;     
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top-color: #ff9595;
+}
+
+
+
+
+.story-boxp {
+  position: relative;
+  flex: 1;
+  max-width: 600px;
+  height: 400px;
+  size: fixed;
+  margin-right: 1rem;
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #000000;
+}
+
+.page-boxp {
+  border-radius: 20px; /* curved edges */
+  padding: 20px;
+  justify-content: center;
+  width: 560px;
+  height: 380px;
+}
+
+
+.story-contentp {
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+}
+
+
+.cover-pagep {
+  font-size: 2.5rem;
+  color: white;
+  margin-top: 30px;
+  padding: 10px 0px;
+  border-radius: 12px;
+}
+
+
+.story-titlep {
+  font-family: 'jellee';
+  font-size: 12px;
+  text-align: center;
+  margin-top: 220px;
+  font-weight: 100;
+  color: #65503D;  
+  text-align: center;
+}
+
+.story-textp {
+  font-family: 'HeyComic', cursive;
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: 1.7;
+  text-align: justify;
+  color: black;
+  padding: 1rem;
+  max-height: 100%;             
+  overflow: hidden;           
+  word-break: break-word;      
+}
+
+.story-endp {
+  font-family: 'HeyComic', cursive;
+  font-size: 5rem;        
+  font-weight: 100;   
+  color: #000000;
+  text-align: center;
+  margin-top: 150px;
+  text-shadow: 1px 1px #000000;
+    text-shadow:  
+    -1px -1px 0 pink,
+     1px -1px 0 pink,
+    -1px  1px 0 pink,
+     1px  1px 0 pink;
+}
+
+
+
+
+.side-buttons {
+  position: absolute;
+  top: 100px;
+  right: -70px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.side-buttons button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  width: 60px;
+  transition: background-color 0.3s ease;
+}
+
+.side-buttons button:hover {
+  background-color: #ff6e6e;
+}
+
+.page-controlsp {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 2rem;
+}
+
+.page-controlsp button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-controlsp button:hover {
+  background-color: #ff6b6b;
+}
+
+.page-controlsp button:disabled {
+  background-color: #ffd3d3;
+  cursor: not-allowed;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+
+
+/* First page background */
+.cover1-bg {
+  background: url("./assets/firstpage.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Story pages background */
+.story-bg {
+  background: url("./assets/default.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Last page background */
+.end-bg {
+  background: url("./assets/lastpage.png") no-repeat center center;
+  background-size: cover;
+}
+
+
+
+
+/* Layout for story pages with left image */
+.left-img-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+/* Layout for story pages with right image */
+
+
+/* Story page image */
+.page-imgp {
+  max-width: 30.5%;
+  height: 69%;
+  margin-left: 23px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Container for read mode controls */
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Buttons wrapping the icons */
+.control-btn {
+  border: none;
+  cursor: pointer;
+  padding: 1px;
+  transition: transform 0.2s;
+}
+
+.control-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.control-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+/* Icon images */
+.control-icon {
+  width: 30px;   /* Adjust size as needed */
+  height: 30px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+
+  .robot-sectionp{
+    display: none;
+  }
+
+  .cover1-bg {
+  background: url("./assets/firstpage1.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Story pages background */
+.story-bg {
+  background: url("./assets/default1.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Last page background */
+.end-bg {
+  background: url("./assets/lastpage1.png") no-repeat center center;
+  background-size: cover;
+}
+.page-imgp{
+    width: 100px;     /* adjust as needed */
+  height: 100px;    /* make width ≠ height for ellipse */
+  object-fit: cover; /* ensures image fits nicely */
+
+}
+
+  .left-img-layout {
+    flex-direction: column;  /* stack image + text vertically */
+    gap: 1rem;
+  }
+
+  .story-boxp{
+    width: 300px;
+    height: 500px;
+  }
+
+  .story-textp{
+    width: 300px;
+    height: 600px;
+    font-size: 15px;
+  }
+  .page-boxp{
+    width: 250px;
+    margin-top: 100px;
+  }
+
+
+
+
+}

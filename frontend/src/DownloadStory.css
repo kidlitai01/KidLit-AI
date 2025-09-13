@@ -1,0 +1,24 @@
+
+
+.download-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce7f3, #fbcfe8); 
+  font-family: "Comic Sans MS", "Poppins", sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.download-container h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff9595; 
+  background: #fff0f6;
+  padding: 15px 25px;
+  border-radius: 20px;
+  border: 2px solid #f472b6; 
+  box-shadow: 2px 2px 8px rgba(244, 114, 182, 0.4);
+}
