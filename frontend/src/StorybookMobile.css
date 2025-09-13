@@ -68,13 +68,12 @@
 .story-title1 {
   font-family: 'jellee', cursive;
   font-size: 0.7rem;
-  margin-top: 270px;
+  width: 180px;
   font-weight: 100;
   text-shadow: 1px 1px #e0d4b7;
   color: #65503D;  
   text-align: center;
-
-
+  margin: 265px auto;
 
 }
 
