@@ -15,9 +15,13 @@ const Quiz = () => {
     const lang = localStorage.getItem('storyLanguage') || 'english';
     setLanguage(lang);
 
-    if (!storyText) return;
+    if (!storyText) {
+      setError('No story found. Please generate a story first.');
+      setLoading(false);
+      return;
+    }
 
-    fetch('http://localhost:5000/api/generate-quiz', {
+    fetch('https://kidlit-storybook-backend.onrender.com/api/generate-quiz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ story: storyText, language: lang }),
@@ -68,39 +72,38 @@ const Quiz = () => {
         {loading && <p>{getText('Loading questions...', 'प्रश्न लोड हो रहे हैं...')}</p>}
         {error && <p className="error">{error}</p>}
 
-        {!loading &&
-          questions.map((q, index) => (
-            <div key={index} className="quiz-question">
-              <p className="question-text">
-                {index + 1}. {q.question}
-              </p>
-              <div className="options">
-                {q.options.map((option, optIndex) => {
-                  const isSelected = selectedAnswers[index] === option;
-                  const isCorrect = q.answer === option;
-                  const show = showResults;
+        {!loading && questions.map((q, index) => (
+          <div key={index} className="quiz-question">
+            <p className="question-text">
+              {index + 1}. {q.question}
+            </p>
+            <div className="options">
+              {q.options.map((option, optIndex) => {
+                const isSelected = selectedAnswers[index] === option;
+                const isCorrect = q.answer === option;
+                const show = showResults;
 
-                  let className = 'option';
-                  if (show) {
-                    className += isCorrect ? ' correct' : '';
-                    if (isSelected && !isCorrect) className += ' incorrect';
-                  } else if (isSelected) {
-                    className += ' selected';
-                  }
+                let className = 'option';
+                if (show) {
+                  className += isCorrect ? ' correct' : '';
+                  if (isSelected && !isCorrect) className += ' incorrect';
+                } else if (isSelected) {
+                  className += ' selected';
+                }
 
-                  return (
-                    <div
-                      key={optIndex}
-                      className={className}
-                      onClick={() => !show && handleOptionSelect(index, option)}
-                    >
-                      {String.fromCharCode(65 + optIndex)}. {option}
-                    </div>
-                  );
-                })}
-              </div>
+                return (
+                  <div
+                    key={optIndex}
+                    className={className}
+                    onClick={() => !show && handleOptionSelect(index, option)}
+                  >
+                    {String.fromCharCode(65 + optIndex)}. {option}
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
+        ))}
 
         {!loading && questions.length > 0 && !showResults && (
           <button className="submit-btn" onClick={handleSubmit}>
@@ -110,16 +113,10 @@ const Quiz = () => {
 
         {!loading && showResults && (
           <div className="results">
-            <h3>Your Results:</h3>
+            <h3>{getText('Your Results:', 'आपके परिणाम:')}</h3>
             <p>
-              Score:{' '}
-              {
-                Object.keys(selectedAnswers).filter(index => {
-                  const q = questions[Number(index)];
-                  return selectedAnswers[index] === q.answer;
-                }).length
-              }{' '}
-              / {questions.length}
+              {getText('Score', 'स्कोर')}: {' '}
+              {Object.keys(selectedAnswers).filter(index => selectedAnswers[index] === questions[Number(index)].answer).length} / {questions.length}
             </p>
           </div>
         )}
