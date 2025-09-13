@@ -360,9 +360,9 @@ button {
 }
 
   .preview-image {
-    margin-top: -60px;
+    margin-top: -10px;
     margin-left: 30px;
-    max-width: 20%; 
+    max-width: 15%; 
   }
 
   .remove-btn {
