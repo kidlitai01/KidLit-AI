@@ -40,38 +40,7 @@ It creates fun, personalized stories for kids using AI, with support for **text-
 
 ---
 
-## 🏗️ Project Structure
 
-KidLit-AI/
-│── backend/
-│ ├── app.py
-│ └── ...
-│── backend2/
-│ ├── app.py
-│ ├── static/picturebooks/
-│ │ ├── fantasy/3-5/story1/
-│ │ ├── sci-fi/6-8/story2/
-│ └── ...
-│
-│── frontend/
-│ ├── src/
-│ │ ├── App.js
-│ │ ├── pages/
-│ │ │ ├── ChooseOptionPage.js
-│ │ │ ├── CreateStorybook.js # Storybook form (name, age, theme, optional image)
-│ │ │ ├── Storybook.js
-│ │ │ ├── CreatePictureBook.js
-│ │ │ ├── Picturebook.js
-│ │ │ ├── Quiz.js
-│ │ └── components/
-│ └── ...
-│
-│── README.md
-│── requirements.txt
-│── package.json
-
-
----
 
 ## ⚙️ Tech Stack
 
@@ -83,33 +52,6 @@ KidLit-AI/
 
 ---
 
-## 🚀 Setup & Installation
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/kidlitai01/KidLit-AI.git
-cd KidLit-AI
-
-
-### 2. Backend Setup
-cd backend
-pip install -r requirements.txt
-
-Set environment variables in .env:
-
-AZURE_ENDPOINT=https://models.github.ai/inference
-AZURE_KEY=your_api_key_here
-GPT_MODEL=openai/gpt-4.1
-
-Run backend and backend2:
-
-python app.py
-
-###3. Frontend Setup
-
-cd frontend
-npm install
-npm start
 
 
 ## 📜 License
