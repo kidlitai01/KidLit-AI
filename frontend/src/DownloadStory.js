@@ -1,14 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
-import paperBg from "./assets/middlepage1.png"; // middle page background
-import firstPageBg from "./assets/firstpage1.png"; // custom first page background
-import lastPageBg from "./assets/lastpage1.png"; // custom last page background
+import paperBg from "./assets/middlepage1.png";
+import firstPageBg from "./assets/firstpage1.png";
+import lastPageBg from "./assets/lastpage1.png";
 import "./DownloadStory.css";
+import { HeyComicFont } from "./assets/fonts/heycomic-normal";
+
+// Register custom font
+jsPDF.API.events.push([
+  "addFonts",
+  function () {
+    this.addFileToVFS("HeyComic.ttf", HeyComicFont);
+    this.addFont("HeyComic.ttf", "HeyComic", "normal");
+  },
+]);
 
 const DownloadStory = () => {
   const location = useLocation();
   const { title = "My Story", story = "" } = location.state || {};
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   useEffect(() => {
     const generatePDF = () => {
@@ -23,41 +34,57 @@ const DownloadStory = () => {
 
       // ---------- FIRST PAGE ----------
       doc.addImage(firstPageBg, "PNG", 0, 0, pageWidth, pageHeight);
-      doc.setFontSize(28);
-      doc.setFont("helvetica", "bold");
-      doc.text(title, pageWidth / 2, pageHeight / 2, { align: "center" });
+      doc.setFont("HeyComic", "normal");
+      doc.setFontSize(13);
+      doc.setTextColor("#65503D"); // custom color for title
+
+      const marginSide = 60; // left/right margins
+      const usableWidth = pageWidth - marginSide * 2;
+      const marginTop = 345; // push down from top
+
+      // Wrap long title text
+      const wrappedTitle = doc.splitTextToSize(title, usableWidth);
+      wrappedTitle.forEach((line, i) => {
+        doc.text(line, pageWidth / 2, marginTop + i * 36, { align: "center" });
+      });
 
       // ---------- STORY PAGES ----------
-      const margin = 40;
-      const lineHeight = 20;
-      const textWidth = pageWidth - margin * 2;
+      const marginTopStory = 100;
+      const marginBottomStory = 120;
+      const marginLeftStory = 60;
+      const marginRightStory = 150;
+      const lineHeight = 30;
 
-      let y = margin;
-      const splitText = doc.splitTextToSize(story, textWidth);
+      const usableStoryWidth = pageWidth - marginLeftStory - marginRightStory;
+      const splitText = doc.splitTextToSize(story, usableStoryWidth);
 
-      // Add story on subsequent pages
+      let y = marginTopStory;
+
       doc.addPage();
       doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
+      doc.setFont("HeyComic", "normal");
+      doc.setFontSize(18);
+      doc.setTextColor("#000000"); // black story text
 
       splitText.forEach((line) => {
-        if (y > pageHeight - margin) {
+        if (y > pageHeight - marginBottomStory) {
           doc.addPage();
           doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
-          y = margin;
+          y = marginTopStory; // reset y to top margin
         }
-        doc.setFontSize(14);
-        doc.setFont("times", "normal");
-        doc.text(line, margin, y);
+        doc.text(line, marginLeftStory, y);
         y += lineHeight;
       });
 
       // ---------- LAST PAGE ----------
       doc.addPage();
       doc.addImage(lastPageBg, "PNG", 0, 0, pageWidth, pageHeight);
-      // No text here
 
-      // ---------- SAVE ----------
-      doc.save(`${title}.pdf`);
+
+      // ---------- PREVIEW ----------
+      const pdfBlob = doc.output("blob");
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      setPdfUrl(pdfUrl);
     };
 
     generatePDF();
@@ -65,7 +92,26 @@ const DownloadStory = () => {
 
   return (
     <div className="download-container">
-      <h2>Your story is downloading...</h2>
+      <h2>📖 Preview Your Story</h2>
+      {pdfUrl && (
+        <>
+          <iframe
+            src={pdfUrl}
+            width="300px"
+            height="450px"
+            style={{
+              border: "3px solid #ffb6c1",
+              borderRadius: "16px",
+              background: "#fff",
+            }}
+            title="Story Preview"
+          />
+          <br />
+          <a href={pdfUrl} download={`${title}.pdf`}>
+            <button className="download-btns">Download PDF</button>
+          </a>
+        </>
+      )}
     </div>
   );
 };
