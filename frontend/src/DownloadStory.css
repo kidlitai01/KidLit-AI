@@ -1,24 +1,49 @@
-
-
 .download-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* start so heading stays up */
   min-height: 100vh;
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8); 
-  font-family: "Comic Sans MS", "Poppins", sans-serif;
+  background: linear-gradient(135deg, #fde2e4, #fad2e1, #e2ece9);
+  font-family: "Poppins", "Comic Sans MS", cursive, sans-serif;
   text-align: center;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
 .download-container h2 {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff9595; /* stronger pink-red */
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 25px;
+  border: 3px solid #fb7185;
+  box-shadow: 0 0 2px 1px #f76c6c;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-container h2:hover {
+  transform: scale(1.05);
+  box-shadow: 6px 8px 18px rgba(251, 113, 133, 0.45);
+}
+
+.download-btns{
+    background-color: #ff9595;
+  color: white;
+  border: none;
+  padding: 13px 15px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #ff9595; 
-  background: #fff0f6;
-  padding: 15px 25px;
   border-radius: 20px;
-  border: 2px solid #f472b6; 
-  box-shadow: 2px 2px 8px rgba(244, 114, 182, 0.4);
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); 
+  font-family: 'Fredoka', sans-serif;
+}
+
+.download-btns:hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
 }
