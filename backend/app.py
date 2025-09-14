@@ -90,11 +90,11 @@ def generate_from_photo():
     try:
         photo = request.files['photo']
         theme = request.form.get("theme", "Children").strip()
-        names = request.form.getlist("names[]")  # ✅ get multiple names (optional)
+        names = request.form.getlist("names[]")
         ageGroup = request.form.get("ageGroup", "").strip() or "3–5"
         language = request.form.get("language", "english").strip().lower()
 
-        # ✅ Handle names gracefully
+        # Handle names gracefully
         if not names:
             child_names = "a child" if language == "english" else "एक बच्चा"
         elif len(names) == 1:
@@ -105,7 +105,7 @@ def generate_from_photo():
             else:
                 child_names = " और ".join([", ".join(names[:-1]), names[-1]])
 
-        # Save photo
+        # Save photo temporarily
         filename = secure_filename(photo.filename)
         filepath = os.path.join("temp", filename)
         os.makedirs("temp", exist_ok=True)
@@ -170,17 +170,18 @@ def generate_from_photo():
 
         content = response.json()["choices"][0]["message"]["content"]
         lines = content.strip().split('\n')
+
+        # Title = first line
         title = re.sub(r'(^[*_~`#"\s]+|[*_~`#"\s]+$)', '', lines[0].strip())
-        full_story = " ".join(lines[1:]).strip()
 
-        if language == "hindi":
-            story_sentences = [s.strip() + "।" for s in full_story.split("।") if s.strip()]
-        else:
-            story_sentences = re.split(r'(?<=[.!?])\s+', full_story)
+        # Story = remaining lines as a single string
+        story_lines = [line.strip() for line in lines[1:] if line.strip()]
+        story = " ".join(story_lines)
 
+        # Ensure string format for frontend
         return jsonify({
             "title": title,
-            "story": story_sentences,
+            "story": story,        # ✅ story as a string
             "language": language,
             "ageGroup": ageGroup
         })
@@ -188,6 +189,7 @@ def generate_from_photo():
     except Exception as e:
         print("Image Generation Error:", e)
         return jsonify({"title": "", "story": "Image processing failed."}), 500
+
 
 
 
