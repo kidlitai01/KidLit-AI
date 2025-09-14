@@ -230,7 +230,7 @@ body.book-theme{
   font-family: 'jellee', cursive;
   font-size: 12px;
   text-align: center;
-  margin-top: 260px;
+  margin: 260px auto ;
   font-weight: 100;
   color: #65503D;  
   text-align: center;
