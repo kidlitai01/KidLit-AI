@@ -7,10 +7,10 @@ const CreateStorybookPage = () => {
   const [names, setNames] = useState(['']);
   const [ageGroup, setAgeGroup] = useState('');
   const [photo, setPhoto] = useState(null);
-  const [preview, setPreview] = useState(null); // ✅ added preview state
-  const navigate = useNavigate();
-  const [language, setLanguage] = useState('english');
+  const [preview, setPreview] = useState(null);
+  const [language, setLanguage] = useState(''); // ✅ optional
   const [isGenerating, setIsGenerating] = useState(false);
+  const navigate = useNavigate();
 
   const addNameField = () => setNames([...names, '']);
 
@@ -20,7 +20,6 @@ const CreateStorybookPage = () => {
     setNames(updated);
   };
 
-  // ✅ update preview when photo changes
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     setPhoto(file);
@@ -28,13 +27,6 @@ const CreateStorybookPage = () => {
       setPreview(URL.createObjectURL(file));
     }
   };
-
-    useEffect(() => {
-    document.body.classList.add('Story-theme');
-    return () => {
-      document.body.classList.remove('Story-theme');
-    };
-  }, []);
 
   useEffect(() => {
     document.body.classList.add('Story-theme');
@@ -51,74 +43,78 @@ const CreateStorybookPage = () => {
 
   const isMobile = () => window.innerWidth <= 768;
 
- const BACKEND_URL = "https://kidlit-storybook-backend.onrender.com";
+  const BACKEND_URL = "https://kidlit-storybook-backend.onrender.com";
 
-const handleGenerate = async () => {
-  if (isGenerating) return;
-  setIsGenerating(true);
 
-  const defaultStory = `Oops! Something went wrong, but don't worry! Here's a fun little story: Once upon a time, a curious child clicked the Generate button. Even though the magic hiccupped, their imagination soared, and a new adventure began anyway!`;
+  const handleGenerate = async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
 
-  if (!selectedTheme) {
-    alert('Please select a theme.');
-    setIsGenerating(false);
-    return;
-  }
+    const defaultStory = `Oops! Something went wrong, but don't worry! Here's a fun little story: Once upon a time, a curious child clicked the Generate button. Even though the magic hiccupped, their imagination soared, and a new adventure began anyway!`;
 
-  const navigateTo = isMobile() ? '/storybook-mobile' : '/storybook';
+    if (!selectedTheme) {
+      alert('Please select a theme.');
+      setIsGenerating(false);
+      return;
+    }
 
-  try {
-    if (names.some(n => n.trim() !== '') || ageGroup) {
-      const res = await fetch(`${BACKEND_URL}/api/generate-story`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+    const navigateTo = isMobile() ? '/storybook-mobile' : '/storybook';
+
+    try {
+      if (photo) {
+        // ✅ PHOTO FLOW ALWAYS TAKES PRIORITY
+        const formData = new FormData();
+        formData.append('photo', photo);
+        formData.append('theme', selectedTheme);
+
+        if (language) formData.append('language', language);
+        if (ageGroup) formData.append('ageGroup', ageGroup);
+
+        const validNames = names.filter(n => n.trim() !== '');
+        validNames.forEach(n => formData.append('names[]', n));
+
+        const res = await fetch(`${BACKEND_URL}/api/generate-from-photo`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        localStorage.setItem('generatedTitle', data.title || 'My Story');
+        localStorage.setItem('generatedStory', data.story || defaultStory);
+        navigate(navigateTo);
+
+      } else if (names.some(n => n.trim() !== '') || ageGroup) {
+        // ✅ TEXT FLOW
+        const body = {
           names: names.filter(n => n.trim() !== ''),
           ageGroup,
-          theme: selectedTheme,
-          language
-        })
-      });
+          theme: selectedTheme
+        };
+        if (language) body.language = language;
 
-      const data = await res.json();
-      localStorage.setItem('generatedTitle', data.title || 'My Story');
-      localStorage.setItem('generatedStory', data.story || defaultStory);
-      navigate(navigateTo);
-
-    } else if (photo) {
-      const formData = new FormData();
-      formData.append('photo', photo);
-      formData.append('theme', selectedTheme);
-      formData.append('language', language);
-      if (ageGroup) formData.append('ageGroup', ageGroup);
-      if (names && names.length > 0) {
-        names.filter(n => n.trim() !== '').forEach((n) => {
-          formData.append('names[]', n);
+        const res = await fetch(`${BACKEND_URL}/api/generate-story`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
         });
+
+        const data = await res.json();
+        localStorage.setItem('generatedTitle', data.title || 'My Story');
+        localStorage.setItem('generatedStory', data.story || defaultStory);
+        navigate(navigateTo);
+
+      } else {
+        alert('Please enter at least one name/age group, OR upload a photo.');
       }
-
-      const res = await fetch(`${BACKEND_URL}/api/generate-from-photo`, {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await res.json();
-      localStorage.setItem('generatedTitle', data.title || 'My Story');
-      localStorage.setItem('generatedStory', data.story || defaultStory);
+    } catch (err) {
+      console.error(err);
+      localStorage.setItem('generatedTitle', 'My Story');
+      localStorage.setItem('generatedStory', defaultStory);
       navigate(navigateTo);
-    } else {
-      alert('Please enter at least one name or age group, OR upload a photo.');
+    } finally {
+      setIsGenerating(false);
     }
-  } catch (err) {
-    console.error(err);
-    localStorage.setItem('generatedTitle', 'My Story');
-    localStorage.setItem('generatedStory', defaultStory);
-    navigate(navigateTo);
-  } finally {
-    setIsGenerating(false);
-  }
-};
-
+  };
 
   return (
     <div className="app-container">
@@ -180,8 +176,9 @@ const handleGenerate = async () => {
             <option value="9–12">9–12</option>
           </select>
 
-          <label>Language</label>
+          <label>Language (optional)</label>
           <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <option value="">Default (English)</option>
             <option value="english">English</option>
             <option value="hindi">Hindi</option>
           </select>
@@ -192,41 +189,39 @@ const handleGenerate = async () => {
             {isGenerating ? 'Generating...' : 'Generate'}
           </button>
 
-        <div className="camera-upload">
-          <div className="btn-wrapper">
-            {!preview ? (
-              <>
-                <label htmlFor="camera" className="camera-icon">
-                  <img src="/cam-logo.png" alt="cam" className="cam-icon" />
-                </label>
-                <input
-                  id="camera"
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  style={{ display: "none" }}
-                  onChange={handlePhotoChange}
-                />
-                <span className="tooltip4">Capture or upload <br />a picture here!</span>
-              </>
-            ) : (
-              <div className="preview-box mt-3">
-                <img src={preview} alt="Preview" className="preview-image" />
-
-                {/* Optional remove button */}
-                <button
-                  className="remove-btn"
-                  onClick={() => {
-                    setPreview(null);
-                    setPhoto(null);
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            )}
+          <div className="camera-upload">
+            <div className="btn-wrapper">
+              {!preview ? (
+                <>
+                  <label htmlFor="camera" className="camera-icon">
+                    <img src="/cam-logo.png" alt="cam" className="cam-icon" />
+                  </label>
+                  <input
+                    id="camera"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    style={{ display: "none" }}
+                    onChange={handlePhotoChange}
+                  />
+                  <span className="tooltip4">Capture or upload <br />a picture here!</span>
+                </>
+              ) : (
+                <div className="preview-box mt-3">
+                  <img src={preview} alt="Preview" className="preview-image" />
+                  <button
+                    className="remove-btn"
+                    onClick={() => {
+                      setPreview(null);
+                      setPhoto(null);
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
