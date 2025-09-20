@@ -7,6 +7,7 @@ const CreatePicturebookPage = () => {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [name, setName] = useState("");
   const [ageGroup, setAgeGroup] = useState("");
+  const [language, setLanguage] = useState(""); // ✅ New
   const [isGenerating, setIsGenerating] = useState(false);
 
   const navigate = useNavigate();
@@ -28,16 +29,21 @@ const CreatePicturebookPage = () => {
     }
 
     try {
-      // Call backend API
+      // ✅ Add language param if selected
+      const queryParams = new URLSearchParams({
+        name,
+        ...(language && { language })
+      });
+
       const res = await fetch(
-        `https://kidlit-picturebook-backend.onrender.com/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?name=${encodeURIComponent(name)}`
+        `https://kidlit-picturebook-backend.onrender.com/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?${queryParams.toString()}`
       );
 
       if (!res.ok) throw new Error("No story found");
 
       const data = await res.json();
 
-      // ✅ Store entire story + images in localStorage
+      // Store entire story + images
       localStorage.setItem("picturebookStory", JSON.stringify(data));
 
       // Navigate to Picturebook reader
@@ -115,6 +121,14 @@ const CreatePicturebookPage = () => {
             <option value="3-5">3–5</option>
             <option value="6-8">6–8</option>
             <option value="9-12">9–12</option>
+          </select>
+
+          {/* ✅ New Language Option */}
+          <label>Language (Optional)</label>
+          <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <option value="">Default (English)</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
           </select>
 
           <button className="generate-btnp" onClick={handleGenerate} disabled={isGenerating}>
