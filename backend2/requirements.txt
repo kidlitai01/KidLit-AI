@@ -5,3 +5,4 @@ python-dotenv
 deep-translator
 werkzeug
 gunicorn
+indic-transliteration
