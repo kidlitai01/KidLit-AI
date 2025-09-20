@@ -2,16 +2,15 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import os, json, random
 
+# For name transliteration
+from indic_transliteration.sanscript import transliterate, ITRANS, DEVANAGARI
+
 app = Flask(__name__, static_folder="static")
 CORS(app)
 
-# Set this in Render dashboard environment variables
-BACKEND_URL = os.environ.get("BACKEND_URL", "")  # e.g., https://kidlit-picturebook-backend.onrender.com
+BACKEND_URL = os.environ.get("BACKEND_URL", "") 
 
 def find_image(folder_path, filename_without_ext):
-    """
-    Returns a full URL for frontend to fetch images.
-    """
     for ext in [".png", ".jpg", ".jpeg", ".webp"]:
         candidate = os.path.join(folder_path, filename_without_ext + ext)
         if os.path.isfile(candidate):
@@ -19,27 +18,24 @@ def find_image(folder_path, filename_without_ext):
             return f"{BACKEND_URL}/static/{rel_path}" if BACKEND_URL else f"/static/{rel_path}"
     return None
 
+def convert_name_to_hindi(name: str) -> str:
+    try:
+        return transliterate(name, ITRANS, DEVANAGARI)
+    except Exception:
+        return name  # fallback to original if something goes wrong
+
 @app.route("/api/story/<gender>/<theme>/<age_group>")
 def get_random_story(gender, theme, age_group):
     """
-    Returns a random story JSON from the requested gender/theme/age_group.
+    gender: 'boy' or 'girl'
+    theme: selected theme
+    age_group: 3-5, 6-8, 9-12
+    name: query param
+    language: 'english' or 'hindi' (optional)
     """
     name = request.args.get("name", "").strip()
-
-    # Normalize folder names (lowercase, replace en-dash with normal dash)
-    gender = gender.lower()
-    theme = theme.lower()
-    age_group = age_group.replace("–", "-")  # replace en-dash
-
-    base_path = os.path.join(
-        app.static_folder,
-        gender,
-        "picturebooks",
-        theme,
-        age_group
-    )
-
-    print(f"[DEBUG] Searching stories in: {base_path}")
+    language = request.args.get("language", "").lower().strip()
+    base_path = os.path.join(app.static_folder, gender, "picturebooks", theme, age_group)
 
     if not os.path.exists(base_path):
         return jsonify({"error": f"No stories available for {gender}/{theme}/{age_group}."}), 404
@@ -50,11 +46,16 @@ def get_random_story(gender, theme, age_group):
         if not os.path.isdir(folder_path):
             continue
 
-        # Look for JSON story file
-        possible_jsons = [
-            os.path.join(folder_path, f"{story_folder}.json"),
-            os.path.join(folder_path, "story.json"),
-        ]
+        # Select story file based on language
+        possible_jsons = []
+        if language == "hindi":
+            possible_jsons.append(os.path.join(folder_path, "hindi.json"))
+        else:
+            possible_jsons.extend([
+                os.path.join(folder_path, f"{story_folder}.json"),
+                os.path.join(folder_path, "story.json"),
+            ])
+
         story_file = next((p for p in possible_jsons if os.path.isfile(p)), None)
         if not story_file:
             continue
@@ -65,10 +66,11 @@ def get_random_story(gender, theme, age_group):
 
             # Replace <name> placeholders
             if name:
-                data["title"] = data.get("title", "").replace("<name>", name)
+                name_to_use = convert_name_to_hindi(name) if language == "hindi" else name
+                data["title"] = data.get("title", "").replace("<name>", name_to_use)
                 for page in data.get("pages", []):
                     if "text" in page:
-                        page["text"] = page["text"].replace("<name>", name)
+                        page["text"] = page["text"].replace("<name>", name_to_use)
 
             # Remove cover image if exists
             if "cover" in data:
@@ -83,7 +85,7 @@ def get_random_story(gender, theme, age_group):
             stories.append(data)
 
         except Exception as e:
-            print(f"[ERROR] Loading {story_file}: {e}")
+            print(f"Error loading {story_file}: {e}")
 
     if not stories:
         return jsonify({"error": "No valid stories found."}), 404
@@ -91,16 +93,12 @@ def get_random_story(gender, theme, age_group):
     selected_story = random.choice(stories)
     return jsonify(selected_story)
 
+
 # Serve static files
 @app.route("/static/<path:filename>")
 def serve_static(filename):
     return send_from_directory(app.static_folder, filename)
 
-# Root endpoint
-@app.route("/")
-def index():
-    return jsonify({"message": "KidLit Picturebook Backend running!"})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5001))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(port=5001, debug=True)
