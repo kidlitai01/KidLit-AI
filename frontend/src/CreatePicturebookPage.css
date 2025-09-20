@@ -260,8 +260,8 @@ button {
   font-weight: bold;
   cursor: pointer;
   display: block;
-  margin-left: 15px;
-  margin-top: 10px;
+  margin-left: 300px;
+  margin-top: -63px;
 }
 
 .generate-btnp:disabled {
