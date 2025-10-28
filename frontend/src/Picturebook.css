@@ -1,0 +1,380 @@
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.main-bodyp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+  .app-headerp{
+      display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 1rem;
+  margin-left: 30px;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+  }
+
+
+
+.story-boxp {
+  position: relative;
+  flex: 1;
+  max-width: 800px;
+  height: 500px;
+  size: fixed;
+  margin-right: 1rem;
+  border-radius: 20px;
+  margin-top: -10px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #000000;
+}
+
+.page-boxp {
+  border-radius: 20px; /* curved edges */
+  padding: 20px;
+  justify-content: center;
+  width: 560px;
+  height: 380px;
+}
+
+
+.story-contentp {
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+}
+
+
+.cover-pagep {
+  font-size: 2.5rem;
+  color: white;
+  margin-top: 30px;
+  padding: 10px 0px;
+  border-radius: 12px;
+}
+
+
+.story-titlep {
+  font-family: 'jellee';
+  font-size: 12px;
+  text-align: center;
+  margin-top: 275px;
+  font-weight: 100;
+  color: #65503D;  
+  text-align: center;
+}
+
+.story-textp {
+  font-family: 'HeyComic', cursive;
+  font-size: 1.1rem;
+  font-weight: 100;
+  line-height: 1.7;
+  width: 245px;
+  text-align: left;
+  color: black;
+  padding: 1rem;
+  max-height: 100%;             
+  overflow: hidden;           
+  word-break: break-word;      
+}
+
+.story-endp {
+  font-family: 'HeyComic', cursive;
+  font-size: 5rem;        
+  font-weight: 100;   
+  color: #000000;
+  text-align: center;
+  margin-top: 150px;
+  text-shadow: 1px 1px #000000;
+    text-shadow:  
+    -1px -1px 0 pink,
+     1px -1px 0 pink,
+    -1px  1px 0 pink,
+     1px  1px 0 pink;
+}
+
+
+
+
+.side-buttons {
+  position: absolute;
+  top: 100px;
+  right: -70px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.side-buttons button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  width: 60px;
+  transition: background-color 0.3s ease;
+}
+
+.side-buttons button:hover {
+  background-color: #ff6e6e;
+}
+
+.page-controlsp {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 2rem;
+}
+
+.page-controlsp button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-controlsp button:hover {
+  background-color: #ff6b6b;
+}
+
+.page-controlsp button:disabled {
+  background-color: #ffd3d3;
+  cursor: not-allowed;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+
+
+/* First page background */
+.cover1-bg {
+  background: url("./assets/firstpage.png") no-repeat center center;
+  background-size: cover;
+}
+
+/* Story pages background */
+.story-bg {
+  background: url("./assets/middlepage.png") no-repeat center center;
+  background-size: cover;
+  
+}
+
+/* Last page background */
+.end-bg {
+  background: url("./assets/lastpage.png") no-repeat center center;
+  background-size: cover;
+}
+
+
+
+
+.left-img-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 100%;
+}
+
+
+
+.page-imgp {
+  max-width: 45%;
+  height: 80%;
+  margin-left: -70px;
+  border: solid #ffde59;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Container for read mode controls */
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.page-controlsp {
+  display: flex;
+  justify-content: center;
+  margin-top: -0.8rem;
+  gap: 2rem;
+  font-family: 'Fredoka', sans-serif; 
+}
+
+.page-controlsp button {
+  background-color: #ff9595;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-controlsp button:hover {
+  background-color: #ff6b6b;
+}
+
+.page-controlsp button:disabled {
+  background-color: #ffd3d3;
+  cursor: not-allowed;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+
+/* Buttons wrapping the icons */
+.control-btn {
+  border: none;
+  cursor: pointer;
+  padding: 1px;
+  transition: transform 0.2s;
+}
+
+.control-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.control-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+/* Icon images */
+.control-icon {
+  width: 30px;   /* Adjust size as needed */
+  height: 30px;
+  object-fit: contain;
+}
+
+.sidebar-toggle{
+  display: none;
+}
+
+
+
+@media (max-width: 768px) {
+
+  .sidebar-toggle{
+  display: block;
+}
+  /* Hide robot section on mobile */
+  .robot-sectionp {
+    display: none;
+  }
+
+  .cover1-bg {
+    background: url("./assets/firstpage1.png") no-repeat center center;
+    background-size: cover;
+  }
+
+  .story-bg {
+    background: url("./assets/default1.png") no-repeat center center;
+    background-size: cover;
+  }
+
+  .end-bg {
+    background: url("./assets/lastpage1.png") no-repeat center center;
+    background-size: cover;
+  }
+
+  .story-boxp {
+    width: 400px;     
+    height: 500px;    
+    margin: 0 auto;   
+  }
+
+  .left-img-layout{
+    gap:1rem;
+    margin-left: 80px;
+  }
+
+  .page-boxp {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;     
+    align-items: flex-start;
+  }
+
+  .page-imgp {
+    width: 95px;
+    height: 140px;
+    margin-top: -227px;
+    border-radius: 8px;
+    object-fit: fill;
+    flex-shrink: 0;      
+  }
+
+  .story-textp {
+    font-size: 12px;
+    line-height: 1.5;
+    background-color: #ffeed1;
+    border-radius: 20px;
+    width: 148px;
+    padding: 10px;
+  }
+  .story-titlep {
+    margin-top: 265px;
+  }
+
+  .about-iconp{
+    width: 37px;
+  height: 37px;
+  margin-top: 50px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-items: center;
+
+
+}
+
+}

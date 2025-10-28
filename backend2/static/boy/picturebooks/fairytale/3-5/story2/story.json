@@ -1,0 +1,37 @@
+{
+  "title": "<name> and the Rainbow Shoes",
+  "pages": [
+    {
+      "text": "One morning, <name> found a pair of shiny, rainbow-colored shoes under his bed. The moment he slipped them on, whoosh! he jumped into a storybook world!",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page1.png"
+    },
+    {
+      "text": "First, he landed in a candy kingdom, where chocolate rivers flowed and gummy bears danced. <name> giggled as candy canes waved hello.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page2.png"
+    },
+    {
+      "text": "Then he jumped again and floated into a cloud playground, bouncing on fluffy clouds and sliding down rainbows.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page3.png"
+    },
+    {
+      "text": "Next, he hopped into a forest of talking rabbits. “Hello, <name>!” they said. “Want to play hide-and-seek?” <name> laughed and joined them.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page4.png"
+    },
+    {
+      "text": "But oh no! One shoe went missing! A shy dragon had taken it, hiding behind a sparkling waterfall.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page5.png"
+    },
+    {
+      "text": "<name> remembered what his mom always said: “Kindness works magic.” He gently said, “Please may I have my shoe back?” The dragon peeked out, smiled, and returned the shoe.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page6.png"
+    },
+    {
+      "text": "“Thank you,” <name> said, and the dragon waved goodbye.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page7.png"
+    },
+    {
+      "text": "With both shoes on, <name> jumped back home. He landed softly on his bedroom rug, his heart full of joy. He had traveled amazing worlds, made new friends, and learned that kindness can solve even tricky problems.",
+      "image": "/static/boy/picturebooks/fairytale/3-5/story2/page8.png"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: #ffe4ec;
+}
+
+
+
+.app-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.center-column {
+  flex: 1;
+  min-width: 300px;
+
+}
+
+.About-text {
+    display: flex;
+    font-size: 40px;
+    color: #ff9595;
+    font-weight: bold;
+    text-shadow: 1px 2px 1.5px rgba(63, 63, 63, 0.3);
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
+    margin-bottom: -1rem;
+}
+
+.intro {
+    display: flex;
+    font-size: 1.1rem;
+    color: #222;
+    font-weight: 500;
+    margin:auto;
+    margin-top: 10px;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6;
+    font-weight: bold;
+  font-family: 'Fredoka', sans-serif;
+
+}
+
+
+
+
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.about-section {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 40px;
+  flex-wrap: wrap; /* Responsive stacking */
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+  min-width: 300px; /* Prevent columns from getting too narrow */
+}
+
+
+/* Feedback form */
+.feedback-form {
+  background: #fff0f6;
+  border: 2px solid #ffe4ec;
+  border-radius: 20px;
+  padding: 25px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 3px 3px 10px rgba(244, 114, 182, 0.3);
+  font-family: "HeyComic";
+  font-weight: 100;
+}
+
+.feedback-form h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #ff9595;
+  font-family: "HeyComic";
+  font-weight: 100;
+}
+
+.feedback-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+  padding: 12px;
+  border: 2px solid #ffe4ec;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.feedback-form textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #d1d5db; /* gray */
+  transition: color 0.2s ease;
+}
+
+.star.filled {
+  color: #fbbf24; /* gold */
+}
+
+.feedback-form button {
+  background: #ff9595;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: "HeyComic";
+}
+
+.feedback-form button:hover {
+  background: #ff6161;
+}
+
+.status {
+  margin-top: 12px;
+  font-weight: 100;
+  color: #16a34a; /* green for success */
+}
+
+/* Mobile layout: stack into one column */
+@media (max-width: 768px) {
+
+  .intro{
+    font-size: small;
+    margin-top: 10px;
+  }
+  .about-section {
+    flex-direction: column;
+    align-items: center; /* Center items in column mode */
+    gap: 5px; /* Smaller spacing on mobile */
+    margin: 20px;
+  }
+
+  .left-section,
+  .right-section {
+    min-width: unset; /* Remove fixed min width */
+    width: 100%; /* Full width in single column */
+  }
+
+  .feedback-form{
+    width: 250px;
+    margin-top: -10px;
+  }
+
+  .feedback-form h3{
+    font-size: 1rem;
+  }
+
+  .feedback-form input,
+.feedback-form textarea {
+  padding: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.star-rating {
+  gap: 8px;
+  margin: -10px 0;
+}
+  
+
+  
+  
+
+
+
+
+
+
+}

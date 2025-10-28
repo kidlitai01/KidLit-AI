@@ -1,0 +1,7 @@
+flask
+flask-cors
+requests
+python-dotenv
+werkzeug
+deep-translator
+gunicorn

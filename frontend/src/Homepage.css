@@ -1,0 +1,316 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: #ffe4ec;
+  overflow: hidden;
+}
+
+
+
+.app-container {
+  padding: 2rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 2rem;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  height: 50px;
+  filter: drop-shadow(0 0 1px #ff9595);
+  margin-left: 40px;
+}
+
+.logo-text {
+  font-size: 52px;
+  color: #ff9595;
+  font-weight: bold;
+  text-shadow: 1px 2px 1.5px rgba(63, 63, 63, 0.3);
+  margin: auto;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+button {
+  font-family: 'Fredoka', sans-serif;
+}
+
+
+.about-btn {
+  background-color: #ff9595;
+  color: white;
+  border: none;
+  padding: 13px 15px;
+  margin-right: 40px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); 
+  font-family: 'Fredoka', sans-serif;
+}
+
+.about-btn:hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
+}
+
+
+.app-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+}
+
+.left-column {
+  flex: 1;
+  min-width: 300px;
+  margin-left: 95px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 60px;
+  color: #ff9595;
+  font-weight: bold;
+  text-shadow: 1px 2px 1.5px rgba(63, 63, 63, 0.3);
+  margin-left: -10px;
+  margin-top: -100px;
+  margin-bottom: -1rem;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.intro-text2 {
+  font-size: 20px;
+  color: #000000;
+  margin-left: auto;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  font-weight: bold;
+  font-family: 'Fredoka', sans-serif;
+  
+}
+
+.get-started-btn {
+  background-color: #ff9595;
+  color: white;
+  font-weight: bold;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); 
+  font-family: 'Fredoka', sans-serif;
+}
+
+.get-started-btn:hover {
+  box-shadow: 0 0 2px 1px #f76c6c;
+}
+
+.robot-image {
+  width: 450px;
+  margin-top: 20px;
+  margin-right: 150px;
+  filter: drop-shadow(0 0 3px #ff9595);
+}
+
+.speech-bubble {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  background-color: #ff9595;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.3rem;
+  font-family: 'Fredoka', sans-serif;
+  margin-right: 100px;
+  padding: 15px 10px;
+  border-radius: 30px 30px 30px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 180px;
+  transform: scale(0.8);
+  opacity: 0;
+  animation: popBubble 0.6s ease-out forwards;
+}
+
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -12px; 
+  left: 20px;     
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top-color: #ff9595;
+}
+
+
+
+@keyframes popBubble {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+
+
+  .app-main {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: auto;
+    gap: 2rem;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: popBubble 0.6s ease-out forwards;
+
+  }
+
+  .left-column {
+  flex: 1;
+  min-width: 300px;
+  margin: auto;
+}
+
+
+  .logo-section {
+    flex-direction: center;
+    text-align: center;
+    transform: scale(0.8);
+    opacity: 0;
+    margin: auto;
+    animation: popBubble 0.6s ease-out forwards;    
+  }
+
+  .logo-icon {
+    margin: auto;
+    width: 60px;
+    height: 60px;
+    margin-left: 40px;
+  }
+
+  .logo-text {
+    font-size: 50px;
+    margin-top: 0px;
+    text-align: center;
+  }
+
+  .about-btn {
+    font-size: 0.75rem;
+    width: 80px;
+    height: 18px;
+    text-align: center;
+    position: absolute;
+    top: -2.1rem;
+    right: -3rem;
+    z-index: 10;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: popBubble 0.6s ease-out forwards;    
+  }
+
+
+  .welcome-text {
+    font-size: 33px;
+    margin-top: -10px;
+    margin: auto;
+    margin-bottom: 5px;
+  }
+
+  .intro-text2 {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: justify;
+    max-width: 90%;
+    margin: auto;
+
+
+  }
+
+  .get-started-btn {
+    font-size: 16px;
+    padding: 15px 15px;
+    margin-left: -12rem;
+    margin-top: 0.1rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+
+  }
+
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .speech-bubble {
+  top: -40px;
+  font-size: 1rem;
+  margin-right: -10px;
+  padding: 10px -8px;
+}
+
+
+
+
+  .robot-image {
+    width: 160px !important;
+    margin-left: -20px;
+    display: block;
+    filter: drop-shadow(0 0 2px #ff9595);
+  }
+
+  
+}
+
+
+
+
+

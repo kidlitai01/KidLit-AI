@@ -1,0 +1,37 @@
+{
+  "title": "<name> and the Treasure of Numbers",
+  "pages": [
+    {
+      "text": "<name> was playing in the garden when he spotted a shiny treasure chest tucked behind a bush. Excited, he ran over, but the chest had a lock with three number dials. “Hmm… how do I open it?” he wondered.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page1.png"
+    },
+    {
+      "text": "A friendly squirrel scampered by and whispered, “Look around! The clues are hiding in plain sight.”",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page2.png"
+    },
+    {
+      "text": "<name> noticed five red flowers in a row. “Maybe the first number is 5!” he guessed. He turned the first dial to 5.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page3.png"
+    },
+    {
+      "text": "Next, he saw two birds hopping on the fence, then three more flying by. “That’s 2 + 3 = 5!” <name> said, setting the second dial to 5.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page4.png"
+    },
+    {
+      "text": "Finally, he found seven shiny stones in a circle, but one had rolled away. “7 – 1 = 6,” he said, turning the last dial to 6.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page5.png"
+    },
+    {
+      "text": "He held his breath and clicked the lock. Click! The chest opened! Inside were golden coins, sparkling gems, and a little note. It read: “Great job, <name>! You solved the numbers. Remember, counting, adding, and subtracting can unlock many secrets!”",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page6.png"
+    },
+    {
+      "text": "<name> grinned, thinking about the clues. Flowers taught him counting, the birds helped him add, and the stones showed subtraction. Math wasn’t scary at all—it was like a treasure hunt! He picked up a coin and held it high. “Numbers really are magical!” he said, smiling.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page7.png"
+    },
+    {
+      "text": "<name> spent the rest of the afternoon sharing the treasure with his friends, explaining how he used simple math to solve a big puzzle.",
+      "image": "/static/boy/picturebooks/educational/6-8/story2/page8.png"
+    }
+  ]
+}
