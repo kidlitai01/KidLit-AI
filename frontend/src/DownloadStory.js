@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
-import paperBg from "./assets/middlepage1.png";
-import firstPageBg from "./assets/firstpage1.png";
-import lastPageBg from "./assets/lastpage1.png";
+import paperBg from "./assets/middlepage.png";
+import firstPageBg from "./assets/firstpage.png";
+import lastPageBg from "./assets/lastpage.png";
 import "./DownloadStory.css";
 import { HeyComicFont } from "./assets/fonts/heycomic-normal";
 
@@ -23,8 +23,10 @@ const DownloadStory = () => {
 
   useEffect(() => {
     const generatePDF = () => {
+
+      // ✅ FIXED LANDSCAPE SPELLING
       const doc = new jsPDF({
-        orientation: "portrait",
+        orientation: "landscape",
         unit: "px",
         format: "a4",
       });
@@ -36,26 +38,32 @@ const DownloadStory = () => {
       doc.addImage(firstPageBg, "PNG", 0, 0, pageWidth, pageHeight);
       doc.setFont("HeyComic", "normal");
       doc.setFontSize(13);
-      doc.setTextColor("#65503D"); // custom color for title
+      doc.setTextColor("#65503D");
 
-      const marginSide = 60; // left/right margins
-      const usableWidth = pageWidth - marginSide * 2;
-      const marginTop = 345; // push down from top
+      // 🔥 CHANGE THIS VALUE ONLY TO MOVE TITLE UP/DOWN
+      const marginTop = 260;
 
-      // Wrap long title text
-      const wrappedTitle = doc.splitTextToSize(title, usableWidth);
+      const titleWidth = 350;
+      const wrappedTitle = doc.splitTextToSize(title, titleWidth);
+
       wrappedTitle.forEach((line, i) => {
-        doc.text(line, pageWidth / 2, marginTop + i * 36, { align: "center" });
+        doc.text(
+          line,
+          pageWidth / 2,                // ✅ perfectly centered horizontally
+          marginTop + i * 36,           // ✅ vertical control
+          { align: "center" }           // ✅ correct alignment
+        );
       });
 
       // ---------- STORY PAGES ----------
-      const marginTopStory = 100;
-      const marginBottomStory = 120;
-      const marginLeftStory = 60;
-      const marginRightStory = 150;
-      const lineHeight = 30;
+      const marginTopStory = 80;
+      const marginBottomStory = 100;
+      const lineHeight = 35;
 
-      const usableStoryWidth = pageWidth - marginLeftStory - marginRightStory;
+      const contentWidth = 230;
+      const marginLeftStory = 50;
+      const usableStoryWidth = contentWidth;
+
       const splitText = doc.splitTextToSize(story, usableStoryWidth);
 
       let y = marginTopStory;
@@ -63,14 +71,14 @@ const DownloadStory = () => {
       doc.addPage();
       doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
       doc.setFont("HeyComic", "normal");
-      doc.setFontSize(18);
-      doc.setTextColor("#000000"); // black story text
+      doc.setFontSize(30);
+      doc.setTextColor("#000000");
 
       splitText.forEach((line) => {
         if (y > pageHeight - marginBottomStory) {
           doc.addPage();
           doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
-          y = marginTopStory; // reset y to top margin
+          y = marginTopStory;
         }
         doc.text(line, marginLeftStory, y);
         y += lineHeight;
@@ -80,11 +88,10 @@ const DownloadStory = () => {
       doc.addPage();
       doc.addImage(lastPageBg, "PNG", 0, 0, pageWidth, pageHeight);
 
-
       // ---------- PREVIEW ----------
       const pdfBlob = doc.output("blob");
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      setPdfUrl(pdfUrl);
+      const pdfPreviewUrl = URL.createObjectURL(pdfBlob);
+      setPdfUrl(pdfPreviewUrl);
     };
 
     generatePDF();
@@ -97,8 +104,8 @@ const DownloadStory = () => {
         <>
           <iframe
             src={pdfUrl}
-            width="300px"
-            height="450px"
+            width="900px"     // landscape preview size
+            height="600px"
             style={{
               border: "3px solid #ffb6c1",
               borderRadius: "16px",
