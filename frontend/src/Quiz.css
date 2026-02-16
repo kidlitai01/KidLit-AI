@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
   max-width: 1200px;
-  height: 550px;
+  height: 570px;
   margin: -10px auto;
   background-color: #fff8f0;
   border: 2px solid #ffa8c2;
@@ -93,10 +93,26 @@ h3 {
   box-shadow: 0 0 2px 1px #f76c6c;
 }
 
+.try-again-btn{
+  background-color: #ff9595;
+  color: white;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: -15px auto 0;
+  box-shadow: 1 1 1 rgba(0, 0, 0, 0); 
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  font-family: 'Fredoka', sans-serif;
+
+}
+
 .results {
   text-align: center;
-  margin-top: 5px;
-  font-size: 1.2rem;
+  margin-top: 1px;
+  font-size: 1rem;
   color: #444;
 }
 
