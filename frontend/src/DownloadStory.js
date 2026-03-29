@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 
@@ -14,11 +14,9 @@ import { JelleeFont } from "./assets/fonts/jellee-normal";
 jsPDF.API.events.push([
   "addFonts",
   function () {
-    // HeyComic
     this.addFileToVFS("HeyComic.ttf", HeyComicFont);
     this.addFont("HeyComic.ttf", "HeyComic", "normal");
 
-    // Jellee
     this.addFileToVFS("Jellee.ttf", JelleeFont);
     this.addFont("Jellee.ttf", "Jellee", "normal");
   },
@@ -28,10 +26,6 @@ const DownloadStory = () => {
   const location = useLocation();
   const { title = "My Story", story = "" } = location.state || {};
   const [pdfUrl, setPdfUrl] = useState(null);
-
-  useEffect(() => {
-    generatePDF();
-  }, [title, story]);
 
   // ---------- SHADOW FUNCTION ----------
   const drawTextWithShadow = (doc, text, x, y, options = {}) => {
@@ -44,19 +38,17 @@ const DownloadStory = () => {
       [1, 1],
     ];
 
-    // Shadow layers
     doc.setTextColor(...shadowColor);
     offsets.forEach(([dx, dy]) => {
       doc.text(text, x + dx, y + dy, options);
     });
 
-    // Main text
     doc.setTextColor("#65503D");
     doc.text(text, x, y, options);
   };
 
   // ---------- MAIN PDF FUNCTION ----------
-  const generatePDF = () => {
+  const generatePDF = useCallback(() => {
     const doc = new jsPDF({
       orientation: "landscape",
       unit: "px",
@@ -69,17 +61,14 @@ const DownloadStory = () => {
     // ---------- FIRST PAGE ----------
     doc.addImage(firstPageBg, "PNG", 0, 0, pageWidth, pageHeight);
 
-    doc.setFont("Jellee", "normal"); // ✅ FIXED
+    doc.setFont("Jellee", "normal");
     doc.setFontSize(28);
 
-    const titleWidth = 200;
+    const wrappedTitle = doc.splitTextToSize(title, 200);
     const lineHeight = 25;
 
-    const wrappedTitle = doc.splitTextToSize(title, titleWidth);
-
-    // Center vertically
     const totalHeight = wrappedTitle.length * lineHeight;
-    let startY = (pageHeight / 2) - (totalHeight / 2);
+    let startY = pageHeight / 2 - totalHeight / 2;
 
     wrappedTitle.forEach((line, i) => {
       drawTextWithShadow(
@@ -91,17 +80,9 @@ const DownloadStory = () => {
       );
     });
 
-    // ---------- STORY PAGES ----------
-    const marginTop = 80;
-    const marginBottom = 100;
-    const lineHeightStory = 30;
-
-    const contentWidth = 650;
-    const marginLeft = 50;
-
-    const splitText = doc.splitTextToSize(story, contentWidth);
-
-    let y = marginTop;
+    // ---------- STORY ----------
+    const splitText = doc.splitTextToSize(story, 650);
+    let y = 80;
 
     doc.addPage();
     doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
@@ -111,14 +92,14 @@ const DownloadStory = () => {
     doc.setTextColor("#000000");
 
     splitText.forEach((line) => {
-      if (y > pageHeight - marginBottom) {
+      if (y > pageHeight - 100) {
         doc.addPage();
         doc.addImage(paperBg, "PNG", 0, 0, pageWidth, pageHeight);
-        y = marginTop;
+        y = 80;
       }
 
-      doc.text(line, marginLeft, y);
-      y += lineHeightStory;
+      doc.text(line, 50, y);
+      y += 30;
     });
 
     // ---------- LAST PAGE ----------
@@ -129,7 +110,13 @@ const DownloadStory = () => {
     const blob = doc.output("blob");
     const url = URL.createObjectURL(blob);
     setPdfUrl(url);
-  };
+
+  }, [title, story]); // ✅ IMPORTANT
+
+  // ✅ FIXED useEffect
+  useEffect(() => {
+    generatePDF();
+  }, [generatePDF]);
 
   return (
     <div className="download-container">
