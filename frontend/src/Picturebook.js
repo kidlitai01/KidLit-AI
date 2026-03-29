@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Picturebook.css";
 
 const Picturebook = () => {
@@ -7,6 +8,8 @@ const Picturebook = () => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
 
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -155,6 +158,27 @@ const Picturebook = () => {
       <div className="page-controlsp">
         <button onClick={handlePrev} disabled={currentPageIndex === 0}>&lt;</button>
         <button onClick={handleNext} disabled={isLastPage}>&gt;</button>
+        <button
+          onClick={() =>
+            navigate("/download-picturebook", {
+              state: {
+                picturebook: JSON.parse(
+                  localStorage.getItem("picturebookStory")
+                ),
+              },
+            })
+          }
+          className="download-btnp"
+        >
+          <img
+            src="/download-logo.png"
+            alt="download"
+            className="download-iconp"
+            
+          />
+        </button>
+
+
       </div>
     </div>
     </div>
