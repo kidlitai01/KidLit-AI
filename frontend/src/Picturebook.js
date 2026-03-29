@@ -140,7 +140,7 @@ const Picturebook = () => {
           }`}
         >
           <div className="story-contentp">
-            {currentPage.type === "cover" && <h2 className="story-titlep">{currentPage.title}</h2>}
+            {currentPage.type === "cover" && <h2 className="story-titlex">{currentPage.title}</h2>}
             {currentPage.type === "story" && (
               <div className="page-layoutp left-img-layout">
                 {currentPage.image && <img src={currentPage.image} alt="story" className="page-imgp" />}

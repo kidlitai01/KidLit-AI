@@ -1,15 +1,14 @@
 import os
 import requests
 import base64
+import re
+import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from deep_translator import GoogleTranslator
 from dotenv import load_dotenv
-import re
-import json
-import random
 
+# ================= ENV =================
 load_dotenv()
 
 AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
@@ -19,69 +18,131 @@ GPT_MODEL = os.getenv("GPT_MODEL")
 app = Flask(__name__)
 CORS(app)
 
+# ================= HELPERS =================
+def clean_title(title):
+    if not title:
+        return "My Story"
+
+    title = title.strip()
+
+    # Remove prefixes
+    title = re.sub(r'^(Title|title|TITLE|शीर्षक)\s*[:\-–]\s*', '', title)
+
+    # Remove numbering
+    title = re.sub(r'^\d+[\.\-\)]\s*', '', title)
+
+    # Remove symbols/markdown
+    title = re.sub(r'(^[*_~`#"\s]+|[*_~`#"\s]+$)', '', title)
+
+    return title.strip() or "My Story"
+
+
+def parse_story(content):
+    lines = [line.strip() for line in content.split("\n") if line.strip()]
+
+    if not lines:
+        return "My Story", ""
+
+    if len(lines) == 1:
+        return "My Story", lines[0]
+
+    first = lines[0].lower()
+
+    if first.startswith("title") or first.startswith("शीर्षक"):
+        title = clean_title(lines[0])
+        story = " ".join(lines[1:])
+    else:
+        title = clean_title(lines[0])
+        story = " ".join(lines[1:])
+
+    return title, story
+
+
+def call_api(body):
+    try:
+        response = requests.post(
+            f"{AZURE_ENDPOINT}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {AZURE_KEY}",
+                "Content-Type": "application/json"
+            },
+            json=body,
+            timeout=15
+        )
+
+        if response.status_code != 200:
+            print("API ERROR:", response.text)
+            return None
+
+        return response.json()["choices"][0]["message"]["content"]
+
+    except Exception as e:
+        print("REQUEST ERROR:", e)
+        return None
+
+
+def format_names(names, language):
+    if not names:
+        return "a child" if language == "english" else "एक बच्चा"
+
+    if len(names) == 1:
+        return names[0]
+
+    if language == "english":
+        return ", ".join(names[:-1]) + " and " + names[-1]
+    else:
+        return ", ".join(names[:-1]) + " और " + names[-1]
+
+
+# ================= ROUTES =================
+
 @app.route('/api/generate-story', methods=['POST'])
 def generate_story():
     try:
         data = request.get_json()
-        names = data.get("names", [])  # list of names
-        age_group = data.get("ageGroup", "")
+
+        names = data.get("names", [])
+        age = data.get("ageGroup", "")
         theme = data.get("theme", "")
         language = data.get("language", "english").lower()
 
-        # Handle names gracefully
-        if not names:
-            child_names = "a child"
-        elif len(names) == 1:
-            child_names = names[0]
-        else:
-            child_names = ", ".join(names[:-1]) + " and " + names[-1]
+        child_names = format_names(names, language)
 
-        # Build prompt
+        # Prompt
         if language == "hindi":
-            system_prompt = "You are a helpful assistant who writes beautiful children's stories in Hindi."
-            prompt = f"एक {theme} विषय पर बच्चों की कहानी लिखें। मुख्य पात्र: {child_names}। "
+            system = "You write Hindi children's stories."
+            prompt = f"{child_names} को मुख्य पात्र बनाकर {theme} विषय पर कहानी लिखें। "
         else:
-            system_prompt = "You are a helpful story-writing assistant for children."
-            prompt = f"Write a {theme} story for children. The main character(s) are {child_names}. "
+            system = "You write children's stories."
+            prompt = f"Write a {theme} story with {child_names} as main characters. "
 
-        if age_group == "3–5":
-            prompt += "Use very simple words and short sentences. The story should be fun, easy to understand, and engaging for a child aged 3 to 5."
-        elif age_group == "6–8":
-            prompt += "Make it fun, magical, and suitable for children aged 6 to 8 with a light adventure."
-        elif age_group == "9–12":
-            prompt += "Include imaginative elements, humor or suspense for ages 9 to 12."
+        if age == "3–5":
+            prompt += "Use very simple words."
+        elif age == "6–8":
+            prompt += "Make it fun and magical."
+        elif age == "9–12":
+            prompt += "Add imagination and adventure."
 
-        # API request
         body = {
             "model": GPT_MODEL,
             "messages": [
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": system},
                 {"role": "user", "content": prompt}
             ],
-            "temperature": 0.9,
-            "top_p": 1
+            "temperature": 0.9
         }
 
-        headers = {
-            "Authorization": f"Bearer {AZURE_KEY}",
-            "Content-Type": "application/json"
-        }
+        content = call_api(body)
 
-        response = requests.post(f"{AZURE_ENDPOINT}/chat/completions", headers=headers, json=body)
-
-        if response.status_code != 200:
-            print("Error:", response.status_code, response.text)
+        if not content:
             return jsonify({"title": "", "story": ""}), 500
 
-        content = response.json()["choices"][0]["message"]["content"]
-        lines = content.strip().split('\n')
-        title = re.sub(r'^[^a-zA-Z0-9\u0900-\u097F]+|[^a-zA-Z0-9\u0900-\u097F]+$', '', lines[0].strip())
-        story = " ".join(lines[1:]).strip()
+        title, story = parse_story(content)
 
         return jsonify({"title": title, "story": story})
 
     except Exception as e:
-        print("Error:", e)
+        print("ERROR:", e)
         return jsonify({"title": "", "story": ""}), 500
 
 
@@ -89,168 +150,111 @@ def generate_story():
 def generate_from_photo():
     try:
         photo = request.files['photo']
-        theme = request.form.get("theme", "Children").strip()
+        theme = request.form.get("theme", "Children")
         names = request.form.getlist("names[]")
-        ageGroup = request.form.get("ageGroup", "").strip() or "3–5"
-        language = request.form.get("language", "english").strip().lower()
+        age = request.form.get("ageGroup", "3–5")
+        language = request.form.get("language", "english").lower()
 
-        # Handle names gracefully
-        if not names:
-            child_names = "a child" if language == "english" else "एक बच्चा"
-        elif len(names) == 1:
-            child_names = names[0]
-        else:
-            if language == "english":
-                child_names = ", ".join(names[:-1]) + " and " + names[-1]
-            else:
-                child_names = " और ".join([", ".join(names[:-1]), names[-1]])
+        child_names = format_names(names, language)
 
-        # Save photo temporarily
-        filename = secure_filename(photo.filename)
-        filepath = os.path.join("temp", filename)
+        # Save temp image
         os.makedirs("temp", exist_ok=True)
-        photo.save(filepath)
+        path = os.path.join("temp", secure_filename(photo.filename))
+        photo.save(path)
 
-        with open(filepath, "rb") as f:
+        with open(path, "rb") as f:
             image_base64 = base64.b64encode(f.read()).decode()
 
-        mimetype = photo.mimetype or "image/jpeg"
-
-        # Build prompt
+        # Prompt
         if language == "hindi":
-            prompt = f"इस चित्र के आधार पर एक {theme} विषय पर बच्चों की कहानी हिंदी में लिखें। "
-            prompt += f"मुख्य पात्र: {child_names}। "
-            if ageGroup == "3–5":
-                prompt += "3 से 5 वर्ष के बच्चों के लिए बहुत सरल शब्दों और छोटे वाक्यों का उपयोग करें। "
-            elif ageGroup == "6–8":
-                prompt += "6 से 8 वर्ष के बच्चों के लिए मजेदार और जादुई कहानी बनाएं। "
-            elif ageGroup == "9–12":
-                prompt += "9 से 12 वर्ष के बच्चों के लिए कल्पनाशीलता और थोड़ा रोमांच जोड़ें। "
-            prompt += "कृपया पहले एक रचनात्मक शीर्षक दें, फिर कहानी लिखें।"
-            system_prompt = "You are a helpful assistant that writes beautiful children's stories in Hindi."
+            prompt = f"इस चित्र के आधार पर {child_names} के साथ {theme} कहानी लिखें। पहले शीर्षक दें।"
+            system = "You write Hindi children's stories."
         else:
-            prompt = f"Write a children's story based on the image in a {theme} theme. "
-            prompt += f"The main character(s) are {child_names}. "
-            if ageGroup == "3–5":
-                prompt += "Use very simple words and short sentences for 3–5 year olds. "
-            elif ageGroup == "6–8":
-                prompt += "Make it fun, magical, and suitable for 6–8 year olds. "
-            elif ageGroup == "9–12":
-                prompt += "Include imagination and a bit of suspense for 9–12 year olds. "
-            prompt += "Start with a creative title on the first line, then write the story."
-            system_prompt = "You are a helpful story-writing assistant for children."
+            prompt = f"Write a {theme} children's story based on this image with {child_names}. Start with title."
+            system = "You write children's stories."
 
-        # API request
         body = {
             "model": GPT_MODEL,
             "messages": [
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": system},
                 {
                     "role": "user",
                     "content": [
                         {"type": "text", "text": prompt},
-                        {"type": "image_url", "image_url": {"url": f"data:{mimetype};base64,{image_base64}"}}
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:{photo.mimetype};base64,{image_base64}"
+                            }
+                        }
                     ]
                 }
-            ],
-            "temperature": 0.9,
-            "top_p": 1
+            ]
         }
 
-        headers = {
-            "Authorization": f"Bearer {AZURE_KEY}",
-            "Content-Type": "application/json"
-        }
+        content = call_api(body)
 
-        response = requests.post(f"{AZURE_ENDPOINT}/chat/completions", headers=headers, json=body)
+        # Delete temp file
+        os.remove(path)
 
-        if response.status_code != 200:
-            print("Image Error:", response.status_code, response.text)
-            return jsonify({"title": "", "story": "Could not generate story from image."}), 500
+        if not content:
+            return jsonify({"title": "", "story": ""}), 500
 
-        content = response.json()["choices"][0]["message"]["content"]
-        lines = content.strip().split('\n')
+        title, story = parse_story(content)
 
-        # Title = first line
-        title = re.sub(r'(^[*_~`#"\s]+|[*_~`#"\s]+$)', '', lines[0].strip())
-
-        # Story = remaining lines as a single string
-        story_lines = [line.strip() for line in lines[1:] if line.strip()]
-        story = " ".join(story_lines)
-
-        # Ensure string format for frontend
         return jsonify({
             "title": title,
-            "story": story,        # ✅ story as a string
+            "story": story,
             "language": language,
-            "ageGroup": ageGroup
+            "ageGroup": age
         })
 
     except Exception as e:
-        print("Image Generation Error:", e)
-        return jsonify({"title": "", "story": "Image processing failed."}), 500
-
-
+        print("IMAGE ERROR:", e)
+        return jsonify({"title": "", "story": ""}), 500
 
 
 @app.route('/api/generate-quiz', methods=['POST'])
 def generate_quiz():
-    data = request.get_json()
-    story_text = data.get('story')
+    try:
+        data = request.get_json()
+        story = data.get("story")
 
-    if not story_text:
-        return jsonify({'error': 'No story text provided'}), 400
+        if not story:
+            return jsonify({"error": "No story"}), 400
 
-    prompt = f"""
-Based on the following children's story, generate 3 multiple-choice questions.
-Each question should have:
-- a "question" field,
-- an "options" array with 4 choices,
-- and an "answer" field with the correct answer (must match one of the options).
-
-Respond in valid JSON format as a list of objects.
+        prompt = f"""
+Generate 3 MCQs from the story.
+Return JSON list.
 
 Story:
-\"\"\"{story_text}\"\"\"
+{story}
 """
 
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {AZURE_KEY}"
-    }
+        body = {
+            "model": GPT_MODEL,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.7
+        }
 
-    body = {
-        "model": GPT_MODEL,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.7
-    }
+        content = call_api(body)
 
-    try:
-        response = requests.post(f"{AZURE_ENDPOINT}/chat/completions", headers=headers, json=body)
-        response.raise_for_status()
-
-        result = response.json()
-        content = result["choices"][0]["message"]["content"]
-
-        import json
         try:
-            quiz_data = json.loads(content)
-        except json.JSONDecodeError:
-            match = re.search(r'\[.*?\]', content, re.DOTALL)
+            quiz = json.loads(content)
+        except:
+            match = re.search(r'\[\s*{.*}\s*\]', content, re.DOTALL)
             if match:
-                quiz_data = json.loads(match.group(0))
+                quiz = json.loads(match.group(0))
             else:
-                return jsonify({'error': 'Could not parse quiz JSON', 'raw': content}), 500
+                return jsonify({"error": "Invalid format"}), 500
 
-        return jsonify({'quiz': quiz_data})
+        return jsonify({"quiz": quiz})
 
     except Exception as e:
-        print("Quiz Generation Error:", e)
-        return jsonify({'error': str(e)}), 500
-    
+        print("QUIZ ERROR:", e)
+        return jsonify({"error": str(e)}), 500
 
 
-    
-
-if __name__ == '__main__':
+# ================= RUN =================
+if __name__ == "__main__":
     app.run(debug=True)

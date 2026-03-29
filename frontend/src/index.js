@@ -10,10 +10,14 @@ import Storybook from './Storybook';
 import StorybookMobile from './StorybookMobile';
 import Quiz from './Quiz';
 import Audio from './Audio';
-import './index.css';
 import DownloadStory from "./DownloadStory";
 import Picturebook from "./Picturebook";
 import CreatePicturebookPage from './CreatePicturebookPage';
+import DownloadPicturebook from "./DownloadPicturebook";
+
+import NavigationButtons from "./NavigationButtons"; // ✅ ADD THIS
+
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -31,8 +35,10 @@ root.render(
       <Route path="/Audio" element={<Audio />} />
       <Route path="/download-story" element={<DownloadStory />} />
       <Route path="/create/picturebook" element={<CreatePicturebookPage />} />
-      <Route path="/picturebook" element={<Picturebook />} />
-
+      <Route path="/download-picturebook" element={<DownloadPicturebook />} />
     </Routes>
+
+    {/* ✅ GLOBAL BUTTONS */}
+    <NavigationButtons />
   </BrowserRouter>
 );

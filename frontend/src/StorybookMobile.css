@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-left: 30px;
   margin-bottom: 2rem;
   transform: scale(0.8);
@@ -67,13 +67,18 @@
 
 .story-title1 {
   font-family: 'jellee', cursive;
-  font-size: 0.7rem;
+  font-size: 1.5rem;
   width: 180px;
   font-weight: 100;
   text-shadow: 1px 1px #e0d4b7;
   color: #65503D;  
   text-align: center;
-  margin: 265px auto;
+  margin: 200px auto;
+    text-shadow:  
+    -1px -1px 0 rgb(255, 251, 192),
+     1px -1px 0 rgb(255, 251, 192),
+    -1px  1px 0 rgb(255, 251, 192),
+     1px  1px 0 rgb(255, 251, 192);
 
 }
 

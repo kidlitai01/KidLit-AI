@@ -7,7 +7,7 @@
 
 
 body.book-theme{
-  padding: 0.8rem;
+  padding: 1.5rem;
 }
 
 .main-body {
@@ -206,7 +206,7 @@ body.book-theme{
 
 /* First page overrides */
 .story-first-page {
-  background: url('./assets/firstpage.png') no-repeat center center !important;
+  background: url('./assets/firstpage2.png') no-repeat center center !important;
   background-size: cover !important;
   color: #fff;
 }
@@ -224,24 +224,33 @@ body.book-theme{
   margin-top: -80px;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;   
+  align-items: center;   
 }
 
 .story-title {
-  font-family: 'jellee', cursive;
-  font-size: 12px;
-  text-align: center;
-  margin: 260px auto ;
+  font-family: 'jellee';
+  font-size: 25px;
+  margin-top: 80px;
   font-weight: 100;
-  color: #65503D;  
+  color: #65503D;
   text-align: center;
-  width: 150px
+  max-width: 40%;
+  word-wrap: break-word;
+
+  text-shadow:  
+    -1px -1px 0 rgb(255, 251, 192),
+     1px -1px 0 rgb(255, 251, 192),
+    -1px  1px 0 rgb(255, 251, 192),
+     1px  1px 0 rgb(255, 251, 192);
 }
 
 .story-text {
   font-family: 'HeyComic', cursive;
   font-size: 1.25rem;
   margin: auto;
-  margin-top: 45px;
+  margin-top: 50px;
   line-height: 1.7;
   font-weight: 100;
   width: 550px;
