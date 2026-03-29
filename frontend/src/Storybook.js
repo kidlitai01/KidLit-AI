@@ -159,7 +159,7 @@ const goToDownload = () => {
             ) : (
               <>
                 Hey there!👋 I’m <strong>KidLit AI</strong><br />
-                Let's enjoy your story<br />together buddy! 🫂
+                Let's enjoy your story<br />together buddy!
               </>
             )}
           </div>
