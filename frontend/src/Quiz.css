@@ -1,4 +1,16 @@
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 
+}
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 .quiz-container {
     display: flex;
     flex-direction: column;

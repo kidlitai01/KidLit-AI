@@ -1,4 +1,17 @@
 /* src/pages/CreateStorybookPage.css */
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 body.Story-theme {
   margin: auto;
   font-family: 'Fredoka', sans-serif;
