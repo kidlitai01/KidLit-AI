@@ -24,10 +24,9 @@ function AboutUs() {
       name: formData.name,
       email: formData.email,
       message: formData.message,
-      rating: `${rating} star(s) ⭐`, // ✅ rating shown in email
+      rating: `${rating} star(s) ⭐`, 
     };
 
-    // 1️⃣ Send feedback to YOU
     emailjs
       .send(
         'service_gy8bo6c',   // ✅ Your Service ID

@@ -1,12 +1,12 @@
 import React,  { useEffect}  from 'react';
 import { useNavigate,Link } from 'react-router-dom';
-import './ChooseOptionPage.css'; // external styles for cleaner code
+import './ChooseOptionPage.css'; 
 
 const ChooseOptionPage = () => {
   const navigate = useNavigate();
 
   const handleSelect = (type) => {
-    navigate(`/create/${type}`); // adjust route as needed
+    navigate(`/create/${type}`);
   };
 
 

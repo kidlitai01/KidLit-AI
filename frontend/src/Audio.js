@@ -16,7 +16,6 @@ const Audio = () => {
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
 
-  // 🔹 Split story into "pages" of max 10 lines
   useEffect(() => {
     if (story) {
       const words = story.split(/\s+/);
@@ -32,7 +31,6 @@ const Audio = () => {
       });
       if (line.length > 0) lines.push(line.join(" "));
 
-      // Now split lines into pages of 10 lines each
       const allPages = [];
       for (let i = 0; i < lines.length; i += LINES_PER_PAGE) {
         allPages.push(lines.slice(i, i + LINES_PER_PAGE));
@@ -47,7 +45,6 @@ const Audio = () => {
   const totalPages = pages.length;
   const currentPageSentences = pages[page] || [];
 
-  // 🔹 Speak one "line"
   const speakSentence = useCallback(
     (index) => {
       const flatSentences = pages.flat();
@@ -81,7 +78,7 @@ const Audio = () => {
     [pages]
   );
 
-  // 🔹 Play / Pause toggle
+
   const handleToggle = useCallback(() => {
     const flatSentences = pages.flat();
     if (!speaking && flatSentences.length > 0) {
@@ -99,7 +96,6 @@ const Audio = () => {
     }
   }, [speaking, paused, pages, speakSentence]);
 
-  // 🔹 Stop completely
   const handleStop = useCallback(() => {
     speechSynthesis.cancel();
     setSpeaking(false);
@@ -108,7 +104,6 @@ const Audio = () => {
     setPage(0);
   }, []);
 
-  // 🔹 Auto-continue + Auto page flip
   useEffect(() => {
     const flatSentences = pages.flat();
     if (speaking && !paused && currentSentenceIndex < flatSentences.length) {
@@ -154,7 +149,6 @@ const Audio = () => {
 }, []);
 
 
-  // 🔹 Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.code === "Space") {

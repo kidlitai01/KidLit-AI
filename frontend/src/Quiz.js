@@ -26,7 +26,7 @@ const Quiz = () => {
     }
 
     setLoading(true);
-    fetch('https://kidlit-storybook-backend.onrender.com/api/generate-quiz', {
+    fetch('http://localhost:5000/api/generate-quiz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ story: storyText, language: lang }),

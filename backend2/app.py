@@ -2,27 +2,24 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import os, json, random
 
-# For name transliteration
 from indic_transliteration.sanscript import transliterate, ITRANS, DEVANAGARI
 
 app = Flask(__name__, static_folder="static")
 CORS(app)
-
-BACKEND_URL = os.environ.get("BACKEND_URL", "") 
 
 def find_image(folder_path, filename_without_ext):
     for ext in [".png", ".jpg", ".jpeg", ".webp"]:
         candidate = os.path.join(folder_path, filename_without_ext + ext)
         if os.path.isfile(candidate):
             rel_path = os.path.relpath(candidate, app.static_folder).replace(os.sep, "/")
-            return f"{BACKEND_URL}/static/{rel_path}" if BACKEND_URL else f"/static/{rel_path}"
+            return f"http://localhost:5001/static/{rel_path}"
     return None
 
 def convert_name_to_hindi(name: str) -> str:
     try:
         return transliterate(name, ITRANS, DEVANAGARI)
     except Exception:
-        return name  # fallback to original if something goes wrong
+        return name
 
 @app.route("/api/story/<gender>/<theme>/<age_group>")
 def get_random_story(gender, theme, age_group):
@@ -46,7 +43,6 @@ def get_random_story(gender, theme, age_group):
         if not os.path.isdir(folder_path):
             continue
 
-        # Select story file based on language
         possible_jsons = []
         if language == "hindi":
             possible_jsons.append(os.path.join(folder_path, "hindi.json"))
@@ -64,7 +60,6 @@ def get_random_story(gender, theme, age_group):
             with open(story_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            # Replace <name> placeholders
             if name:
                 name_to_use = convert_name_to_hindi(name) if language == "hindi" else name
                 data["title"] = data.get("title", "").replace("<name>", name_to_use)
@@ -72,11 +67,9 @@ def get_random_story(gender, theme, age_group):
                     if "text" in page:
                         page["text"] = page["text"].replace("<name>", name_to_use)
 
-            # Remove cover image if exists
             if "cover" in data:
                 data.pop("cover", None)
 
-            # Fix page image paths
             for i, page in enumerate(data.get("pages", [])):
                 if "image" in page and page["image"]:
                     img_base = os.path.splitext(os.path.basename(page["image"]))[0]
@@ -94,7 +87,7 @@ def get_random_story(gender, theme, age_group):
     return jsonify(selected_story)
 
 
-# Serve static files
+
 @app.route("/static/<path:filename>")
 def serve_static(filename):
     return send_from_directory(app.static_folder, filename)

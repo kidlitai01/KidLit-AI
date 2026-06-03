@@ -8,7 +8,7 @@ const CreateStorybookPage = () => {
   const [ageGroup, setAgeGroup] = useState('');
   const [photo, setPhoto] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [language, setLanguage] = useState(''); // ✅ optional
+  const [language, setLanguage] = useState(''); 
   const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ const CreateStorybookPage = () => {
 
   const isMobile = () => window.innerWidth <= 768;
 
-  const BACKEND_URL = "https://kidlit-storybook-backend.onrender.com";
+  const BACKEND_URL = "http://localhost:5000/";
 
 
   const handleGenerate = async () => {
@@ -70,7 +70,6 @@ const CreateStorybookPage = () => {
 
     try {
       if (photo) {
-        // ✅ PHOTO FLOW ALWAYS TAKES PRIORITY
         const formData = new FormData();
         formData.append('photo', photo);
         formData.append('theme', selectedTheme);
@@ -92,7 +91,6 @@ const CreateStorybookPage = () => {
         navigate(navigateTo);
 
       } else if (names.some(n => n.trim() !== '') || ageGroup) {
-        // ✅ TEXT FLOW
         const body = {
           names: names.filter(n => n.trim() !== ''),
           ageGroup,

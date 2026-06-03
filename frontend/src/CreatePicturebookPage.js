@@ -7,7 +7,7 @@ const CreatePicturebookPage = () => {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [name, setName] = useState("");
   const [ageGroup, setAgeGroup] = useState("");
-  const [language, setLanguage] = useState(""); // ✅ New
+  const [language, setLanguage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const navigate = useNavigate();
@@ -29,24 +29,22 @@ const CreatePicturebookPage = () => {
     }
 
     try {
-      // ✅ Add language param if selected
+      
       const queryParams = new URLSearchParams({
         name,
         ...(language && { language })
       });
 
       const res = await fetch(
-        `https://kidlit-picturebook-backend.onrender.com/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?${queryParams.toString()}`
+        `http://localhost:5001/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?${queryParams.toString()}`
       );
 
       if (!res.ok) throw new Error("No story found");
 
       const data = await res.json();
 
-      // Store entire story + images
       localStorage.setItem("picturebookStory", JSON.stringify(data));
 
-      // Navigate to Picturebook reader
       navigate("/picturebook");
     } catch (err) {
       console.error(err);
