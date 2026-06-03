@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./CreatePicturebookPage.css";
+import API from "./config";
+import CreatePicturebookMobile from "./CreatePicturebookMobile";
 
 const CreatePicturebookPage = () => {
   const [selectedGender, setSelectedGender] = useState("");
@@ -11,6 +13,10 @@ const CreatePicturebookPage = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const navigate = useNavigate();
+
+  const [isMobile, setIsMobile] = useState(
+  window.innerWidth <= 1024
+);
 
   const themes = [
     "Sci-Fi", "Adventure", "Fantasy",
@@ -36,7 +42,7 @@ const CreatePicturebookPage = () => {
       });
 
       const res = await fetch(
-        `http://localhost:5001/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?${queryParams.toString()}`
+        `${API.picturebook}/api/story/${selectedGender.toLowerCase()}/${selectedTheme.toLowerCase()}/${ageGroup}?${queryParams.toString()}`
       );
 
       if (!res.ok) throw new Error("No story found");
@@ -60,6 +66,51 @@ const CreatePicturebookPage = () => {
     document.body.style.overflow = 'auto';
   };
 }, []);
+
+useEffect(() => {
+
+  document.body.style.overflow = "hidden";
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 1024);
+  };
+
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () => {
+
+    document.body.style.overflow = "auto";
+
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+  };
+
+}, []);
+
+if (isMobile) {
+  return (
+    <CreatePicturebookMobile
+      selectedGender={selectedGender}
+      setSelectedGender={setSelectedGender}
+      selectedTheme={selectedTheme}
+      setSelectedTheme={setSelectedTheme}
+      name={name}
+      setName={setName}
+      ageGroup={ageGroup}
+      setAgeGroup={setAgeGroup}
+      language={language}
+      setLanguage={setLanguage}
+      handleGenerate={handleGenerate}
+      isGenerating={isGenerating}
+      themes={themes}
+    />
+  );
+}
 
 
   return (

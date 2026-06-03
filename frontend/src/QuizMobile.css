@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.quiz-mobile-home{
+
+  min-height:100dvh;
+
+  background:
+  linear-gradient(
+    180deg,
+    #ffe4ec 0%,
+    #ffd7e5 100%
+  );
+
+  padding:20px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  font-family:'Fredoka',sans-serif;
+}
+
+
+
+/* =========================
+   TITLE CARD
+========================= */
+
+.quiz-title-card{
+
+  width:100%;
+  max-width:360px;
+
+  background:
+  rgba(255,255,255,.22);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  border:
+  1.5px solid rgba(255,255,255,.45);
+
+  border-radius:30px;
+
+  padding:20px;
+
+  text-align:center;
+
+  margin-bottom:18px;
+
+  box-shadow:
+  0 8px 32px rgba(31,38,135,.12);
+}
+
+.quiz-title-card h2{
+
+  color:#ff9595;
+
+  font-size:34px;
+
+  font-weight:700;
+}
+
+/* =========================
+   QUESTION CARD
+========================= */
+
+.quiz-glass-card{
+
+  width:100%;
+  max-width:360px;
+
+  background:
+  rgba(255,255,255,.22);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  border:
+  1.5px solid rgba(255,255,255,.45);
+
+  border-radius:30px;
+
+  padding:20px;
+
+  margin-bottom:16px;
+
+  box-shadow:
+  0 8px 32px rgba(31,38,135,.12);
+}
+
+.mobile-question{
+
+  color:#444;
+
+  font-size:17px;
+
+  font-weight:700;
+
+  margin-bottom:15px;
+
+  line-height:1.6;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.mobile-options{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+}
+
+.mobile-option{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  background:white;
+
+  color:#444;
+
+  text-align:left;
+
+  cursor:pointer;
+
+  font-size:15px;
+
+  font-weight:600;
+
+  font-family:'Fredoka',sans-serif;
+
+  transition:.3s ease;
+}
+
+.mobile-option:hover{
+
+  transform:translateY(-2px);
+}
+
+.mobile-option.selected{
+
+  background:#ffd2ec;
+
+  border:2px solid #ff9595;
+}
+
+.mobile-option.correct{
+
+  background:#c6f6d5;
+
+  border:2px solid #28a745;
+}
+
+.mobile-option.incorrect{
+
+  background:#f8d7da;
+
+  border:2px solid red;
+}
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.quiz-submit-btn{
+
+  width:100%;
+  max-width:360px;
+
+  height:64px;
+
+  border:none;
+
+  border-radius:35px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff9595,
+    #ffb4c8
+  );
+
+  color:white;
+
+  font-size:20px;
+
+  font-weight:700;
+
+  font-family:'Fredoka',sans-serif;
+
+  cursor:pointer;
+
+  margin-bottom:20px;
+
+  box-shadow:
+  0 10px 30px
+  rgba(255,149,149,.35);
+
+  transition:.3s ease;
+}
+
+.quiz-submit-btn:hover{
+
+  transform:translateY(-3px);
+}
+
+/* =========================
+   RESULT CARD
+========================= */
+
+.quiz-result-card{
+
+  width:100%;
+  max-width:360px;
+
+  background:
+  rgba(255,255,255,.22);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1.5px solid rgba(255,255,255,.45);
+
+  border-radius:30px;
+
+  padding:25px;
+
+  text-align:center;
+
+  box-shadow:
+  0 8px 32px rgba(31,38,135,.12);
+}
+
+.quiz-result-card h3{
+
+  color:#ff9595;
+
+  font-size:28px;
+
+  margin-bottom:10px;
+}
+
+.quiz-result-card p{
+
+  font-size:24px;
+
+  font-weight:700;
+
+  color:#444;
+
+  margin-bottom:20px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-card{
+
+  color:red;
+
+  font-weight:700;
+
+  text-align:center;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:768px)
+and (max-width:1024px){
+
+
+
+  .quiz-title-card{
+    max-width:550px;
+  }
+
+  .quiz-glass-card{
+    max-width:550px;
+  }
+
+  .quiz-result-card{
+    max-width:550px;
+  }
+
+  .quiz-submit-btn{
+    max-width:550px;
+    height:72px;
+    font-size:24px;
+  }
+
+  .quiz-title-card h2{
+    font-size:50px;
+  }
+
+  .mobile-question{
+    font-size:24px;
+  }
+
+  .mobile-option{
+    font-size:20px;
+    padding:18px;
+  }
+
+  .quiz-result-card h3{
+    font-size:38px;
+  }
+
+  .quiz-result-card p{
+    font-size:32px;
+  }
+}

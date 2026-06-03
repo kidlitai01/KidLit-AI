@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './StorybookMobile.css';
+import MobileHeader from "./MobileHeader";
 
 const StorybookMobile = () => {
   const [pages, setPages] = useState([]);
@@ -116,105 +117,117 @@ const [sidebarOpen, setSidebarOpen] = useState(false);
 }, []);
 
 
-  return (
-    <div>
-      <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
-  ☰
-</button>
-{/* Sidebar toggle button */}
-<button 
-  className="sidebar-toggle" 
-  onClick={() => setSidebarOpen(!sidebarOpen)}
->
-  ☰
-</button>
+ return (
+  <div className="storybook-mobile-home">
 
-{/* Sidebar menu */}
-<div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-  <div className="btn-wrapper">
-<button onClick={goToQuiz} className="quiz-button1">
-              <img src="/quiz-logo.png" alt="quiz" className="quiz-icon1" />
-            </button>
-                        <span className="tooltips">Take a fun quiz!</span>
-                        </div>
-  <div className="btn-wrapper">
-            <button onClick={goToAud} className="aud-button1">
-              <img src="/aud-logo.png" alt="aud" className="aud-icon1" />
-            </button>  
-                        <span className="tooltips2">Listen to the story!</span>
-                        </div>
-  <div className="btn-wrapper">
-            <button onClick={goToDownload} className="download-button1">
-              <img src="/download-logo.png" alt="download" className="download-icon1" />
-            </button>
-                        <span className="tooltips3">Download your story!</span>
+<MobileHeader />
 
-            </div>
-              <div className="btn-wrapper">
-
-                    <Link to="/AboutUs" className="about-btns">
-                    <img src="/about.png" alt="about" className="about-icon" />
-            </Link>
-                                    <span className="tooltips4">About us</span>
-            </div>
-            </div>
-
-
-      <header className="app-headers">
-        <Link to="/" className="logo-link">
-          <div className="logo-section">
-            <img src="/kidlit-logo.png" alt="logo" className="logo-icon" />
-            <h1 className="logo-text">KidLit Ai</h1>
-          </div>
-        </Link>
-      </header>
-
-      <div className="main-body1">
-        <div 
-            className={`story-box1 
-              ${currentPageIndex === 0 ? 'story-first-page1' : ''} 
-              ${pages[currentPageIndex] === '' ? 'story-last-page1' : ''}`}
-          >
-            <div className={`story-content1 ${fade ? 'fade-in' : 'fade-out'}`}>
-              {currentPageIndex === 0 ? (
-                <h2 className="story-title1">{pages[0]}</h2>
-              ) : pages[currentPageIndex] === '' ? (
-                <h2 className="story-end1">{pages[currentPageIndex]}</h2>
-              ) : (
-                <p className="story-text1">{pages[currentPageIndex] || ''}</p>
-              )}
-            </div>
-        </div>
-
-
-      </div>
-
-      <div className="page-controls1">
-        <button onClick={handlePrev} disabled={currentPageIndex === 0}>&lt;</button>
-        <button onClick={handleNext} disabled={isLastPage}>&gt;</button>
-      </div>
-      
+    <div
+      className={`story-reading-card
+        ${currentPageIndex === 0 ? "story-first-page-mobile" : ""}
+        ${pages[currentPageIndex] === "" ? "story-last-page-mobile" : ""}
+      `}
+    >
+    
 
       <div
-        ref={hiddenRef}
-        className="story-text1 measure"
-        style={{
-              position: 'absolute',
-              visibility: 'hidden',
-              zIndex: -1,
-              width: '90vw',
-              padding: 0,
-              margin: 0,
-              fontSize: '1rem',
-              lineHeight: '3.3',
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-            }}
+        className={`mobile-story-content ${
+          fade ? "fade-in" : "fade-out"
+        }`}
+      >
 
-            
-      ></div>
+        {currentPageIndex === 0 ? (
+
+          <h2 className="mobile-story-title">
+            {pages[0]}
+          </h2>
+
+        ) : pages[currentPageIndex] === '' ? (
+
+          <h2 className="mobile-story-end">
+          </h2>
+
+        ) : (
+
+          <p className="mobile-story-text">
+            {pages[currentPageIndex] || ''}
+          </p>
+
+        )}
+
+      </div>
+
     </div>
-  );
-};
+
+    <div className="mobile-action-grid">
+
+      <button
+        className="mobile-action-btn"
+        onClick={goToQuiz}
+      >
+        <img src="/quiz-logo.png" alt="" />
+        Quiz
+      </button>
+
+      <button
+        className="mobile-action-btn"
+        onClick={goToAud}
+      >
+        <img src="/aud-logo.png" alt="" />
+        Read
+      </button>
+
+      <button
+        className="mobile-action-btn"
+        onClick={goToDownload}
+      >
+        <img src="/download-logo.png" alt="" />
+        PDF
+      </button>
+
+    </div>
+
+    <div className="page-indicator">
+      Page {currentPageIndex + 1} of {pages.length}
+    </div>
+
+    <div className="mobile-page-controls">
+
+      <button
+        onClick={handlePrev}
+        disabled={currentPageIndex === 0}
+      >
+        ←
+      </button>
+
+      <button
+        onClick={handleNext}
+        disabled={isLastPage}
+      >
+        →
+      </button>
+
+    </div>
+
+    <div
+      ref={hiddenRef}
+      className="story-text1 measure"
+      style={{
+        position: 'absolute',
+        visibility: 'hidden',
+        zIndex: -1,
+        width: '90vw',
+        padding: 0,
+        margin: 0,
+        fontSize: '1rem',
+        lineHeight: '3.3',
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+      }}
+    />
+
+  </div>
+);
+}
 
 export default StorybookMobile;

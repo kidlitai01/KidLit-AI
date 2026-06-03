@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Picturebook.css";
+import PicturebookMobile from "./PicturebookMobile";
 
 const Picturebook = () => {
   const [pages, setPages] = useState([]);
@@ -10,15 +11,38 @@ const Picturebook = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const [isMobile, setIsMobile] = useState(
+  window.innerWidth <= 1024
+);
+
 
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
+useEffect(() => {
+
+  document.body.style.overflow = "hidden";
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 1024);
   };
+
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () => {
+
+    document.body.style.overflow = "auto";
+
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+
+  };
+
 }, []);
 
   
@@ -93,7 +117,18 @@ const Picturebook = () => {
   const currentPage = pages[currentPageIndex] || {};
   const isLastPage = currentPage.type === "end";
 
-
+if (isMobile) {
+  return (
+    <PicturebookMobile
+      pages={pages}
+      currentPageIndex={currentPageIndex}
+      fade={fade}
+      handleNext={handleNext}
+      handlePrev={handlePrev}
+      isLastPage={isLastPage}
+    />
+  );
+}
 
 
   return (

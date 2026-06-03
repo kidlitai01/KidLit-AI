@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./Audio.css";
+import AudioMobile from "./AudioMobile";
 
 const LINES_PER_PAGE = 10; 
 const WORDS_PER_LINE = 12;
@@ -15,6 +16,31 @@ const Audio = () => {
   const [paused, setPaused] = useState(false);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
+
+  const [isMobile, setIsMobile] = useState(
+  window.innerWidth <= 1024
+);
+
+useEffect(() => {
+
+  const handleResize = () => {
+    setIsMobile(
+      window.innerWidth <= 1024
+    );
+  };
+
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () =>
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+
+}, []);
 
   useEffect(() => {
     if (story) {
@@ -164,6 +190,23 @@ const Audio = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleToggle, totalPages]);
+
+if (isMobile) {
+  return (
+    <AudioMobile
+      title={title}
+      page={page}
+      totalPages={totalPages}
+      currentPageSentences={currentPageSentences}
+      currentSentenceIndex={currentSentenceIndex}
+      speaking={speaking}
+      paused={paused}
+      handleToggle={handleToggle}
+      handleStop={handleStop}
+      setPage={setPage}
+    />
+  );
+}
 
   return (
     <div>

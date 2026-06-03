@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+.mobile-home{
+min-height:100vh;
+
+background:
+linear-gradient(
+180deg,
+#ffe4ec 0%,
+#ffd7e5 100%
+);
+
+font-family:'Fredoka',sans-serif;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+
+padding:20px;
+
+overflow-x:hidden;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.mobile-header{
+width:100%;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:10px;
+}
+
+.mobile-brand{
+display:flex;
+
+align-items:center;
+
+gap:10px;
+}
+
+.mobile-logo{
+width:50px;
+
+filter:
+drop-shadow(
+0 0 2px #ff9595
+);
+}
+
+.mobile-brand h1{
+color:#ff9595;
+
+font-size:32px;
+
+font-weight:700;
+
+text-shadow:
+1px 2px 1.5px
+rgba(63,63,63,.25);
+}
+
+.mobile-about-btn{
+background:
+rgba(255,255,255,.25);
+
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,.45);
+
+color:#ff9595;
+
+text-decoration:none;
+
+padding:10px 18px;
+
+border-radius:18px;
+
+font-weight:700;
+
+box-shadow:
+0 8px 20px rgba(255,149,149,.15);
+}
+
+/* =========================
+FLOATING ROBOT
+========================= */
+
+@keyframes floatRobot{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+100%{
+transform:translateY(0px);
+}
+}
+
+.mobile-robot{
+
+width:280px;
+
+margin-top:10px;
+
+margin-bottom:15px;
+
+animation:
+floatRobot 4s ease-in-out infinite;
+
+filter:
+drop-shadow(
+0 15px 25px
+rgba(255,149,149,.35)
+);
+}
+
+/* =========================
+WELCOME CARD
+========================= */
+
+.welcome-card{
+
+width:100%;
+max-width:360px;
+
+background:
+rgba(255,255,255,.22);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+border:
+1.5px solid
+rgba(255,255,255,.45);
+
+border-radius:30px;
+
+padding:24px;
+
+text-align:center;
+
+box-shadow:
+0 8px 32px
+rgba(31,38,135,.12);
+
+margin-bottom:18px;
+}
+
+.welcome-card h2{
+
+color:#ff9595;
+
+font-size:40px;
+
+line-height:1.1;
+
+font-weight:700;
+
+text-shadow:
+1px 2px 1.5px
+rgba(63,63,63,.15);
+}
+
+/* =========================
+FEATURE PILLS
+========================= */
+
+.feature-pills{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:10px;
+
+margin-bottom:18px;
+}
+
+.feature-pill{
+
+background:
+rgba(255,255,255,.35);
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+border:
+1px solid
+rgba(255,255,255,.45);
+
+color:#ff9595;
+
+padding:10px 18px;
+
+border-radius:50px;
+
+font-size:14px;
+
+font-weight:700;
+
+box-shadow:
+0 4px 15px
+rgba(255,149,149,.15);
+}
+
+/* =========================
+DESCRIPTION CARD
+========================= */
+
+.description-card{
+
+width:100%;
+max-width:360px;
+
+background:
+rgba(255,255,255,.22);
+
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+border:
+1.5px solid
+rgba(255,255,255,.45);
+
+border-radius:30px;
+
+padding:24px;
+
+text-align:center;
+
+box-shadow:
+0 8px 32px
+rgba(31,38,135,.12);
+}
+
+.description-card p{
+
+color:black;
+
+font-size:17px;
+
+font-weight:700;
+
+line-height:1.8;
+}
+
+/* =========================
+CTA BUTTON
+========================= */
+
+.start-btn{
+
+margin-top:auto;
+
+width:100%;
+max-width:360px;
+
+height:64px;
+
+border:
+1px solid
+rgba(255,255,255,.4);
+
+border-radius:35px;
+
+background:
+linear-gradient(
+135deg,
+#ff9595,
+#ffb4c8
+);
+
+color:white;
+
+font-size:20px;
+
+font-weight:700;
+
+font-family:'Fredoka',sans-serif;
+
+cursor:pointer;
+
+margin-bottom:10px;
+
+box-shadow:
+0 10px 30px
+rgba(255,149,149,.35);
+
+transition:
+all .3s ease;
+}
+
+.start-btn:hover{
+
+transform:
+translateY(-3px);
+}
+
+/* =========================
+TABLET
+========================= */
+
+@media(min-width:768px)
+and (max-width:1024px){
+
+.mobile-home{
+padding:35px;
+}
+
+.mobile-logo{
+width:65px;
+}
+
+.mobile-brand h1{
+font-size:46px;
+}
+
+.mobile-about-btn{
+font-size:18px;
+padding:14px 22px;
+}
+
+.mobile-robot{
+width:430px;
+}
+
+.welcome-card{
+max-width:550px;
+}
+
+.welcome-card h2{
+font-size:58px;
+}
+
+.feature-pill{
+font-size:18px;
+padding:12px 20px;
+}
+
+.description-card{
+max-width:550px;
+}
+
+.description-card p{
+font-size:22px;
+}
+
+.start-btn{
+max-width:550px;
+height:72px;
+font-size:24px;
+}
+}

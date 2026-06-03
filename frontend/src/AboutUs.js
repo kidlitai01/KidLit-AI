@@ -2,6 +2,7 @@ import React, { useState, } from 'react';
 import { Link } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 import './AboutUs.css';
+import MobileHeader from "./MobileHeader";
 
 function AboutUs() {
   const [rating, setRating] = useState(0);
@@ -54,16 +55,20 @@ function AboutUs() {
   };
 
   return (
-<div className="app-container">
-  <header className="app-header">
+
+
+<div className="app-containera">
+  <header className="app-headera">
     <Link to="/" className="logo-link">
-      <div className="logo-section">
+      <div className="logo-sectiona">
         <img src="/kidlit-logo.png" alt="logo" className="logo-icon" />
-        <h1 className="logo-text">KidLit Ai</h1>
+        <h1 className="logo-texta">KidLit Ai</h1>
       </div>
     </Link>
-            <Link to="/AboutUs" className="about-btn">About Us</Link>
+            <Link to="/AboutUs" className="about-btna">About Us</Link>
   </header>
+
+<MobileHeader />
 
   <section className="about-section">
     {/* Left Section: Intro Text */}

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
   max-width: 1200px;
-  height: 570px;
+  height: 550px;
   margin: -10px auto;
   background-color: #fff8f0;
   border: 2px solid #ffa8c2;
@@ -101,7 +101,7 @@ h3 {
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  margin: -15px auto 0;
+  margin: 5px auto 0;
   box-shadow: 1 1 1 rgba(0, 0, 0, 0); 
   transition: background-color 0.3s ease;
   font-weight: bold;

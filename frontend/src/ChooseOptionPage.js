@@ -1,22 +1,39 @@
-import React,  { useEffect}  from 'react';
-import { useNavigate,Link } from 'react-router-dom';
-import './ChooseOptionPage.css'; 
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import ChooseOptionPageMobile from "./ChooseOptionPageMobile";
+import "./ChooseOptionPage.css";
 
 const ChooseOptionPage = () => {
   const navigate = useNavigate();
 
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width:1024px)").matches
+  );
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    const handleResize = () => {
+      setIsMobile(
+        window.matchMedia("(max-width:1024px)").matches
+      );
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.body.style.overflow = "auto";
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  if (isMobile) {
+    return <ChooseOptionPageMobile />;
+  }
+
   const handleSelect = (type) => {
     navigate(`/create/${type}`);
   };
-
-
-  useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, []);
-
 
   return (
     <><div className="app-container">
@@ -29,7 +46,7 @@ const ChooseOptionPage = () => {
               </Link>
               <Link to="/AboutUs" className="about-btn">About Us</Link>
           </header>
-      </div><div className="content-container">
+      </div><div className="content-containerp">
               <div className="image-section">
                   <img src="/kidlit-story.png" alt="Robot with Story Elements" className="main-art" />
               </div>

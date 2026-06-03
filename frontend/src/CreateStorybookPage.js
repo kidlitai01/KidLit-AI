@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './CreateStorybookPage.css';
-import API from "../config";
+import API from "./config";
+import CreateStorybookMobile from './CreateStorybookMobile';
 
 const CreateStorybookPage = () => {
   const [selectedTheme, setSelectedTheme] = useState('');
@@ -12,6 +13,10 @@ const CreateStorybookPage = () => {
   const [language, setLanguage] = useState(''); 
   const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
+
+  const [mobileView, setMobileView] = useState(
+  window.matchMedia("(max-width:1024px)").matches
+);
 
   const addNameField = () => setNames([...names, '']);
 
@@ -28,6 +33,22 @@ const CreateStorybookPage = () => {
       setPreview(URL.createObjectURL(file));
     }
   };
+
+  useEffect(() => {
+
+  const handleResize = () => {
+    setMobileView(
+      window.matchMedia("(max-width:1024px)").matches
+    );
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+
+}, []);
 
   useEffect(() => {
     document.body.classList.add('Story-theme');
@@ -121,6 +142,30 @@ const CreateStorybookPage = () => {
       setIsGenerating(false);
     }
   };
+
+  if (mobileView) {
+  return (
+    <CreateStorybookMobile
+      selectedTheme={selectedTheme}
+      setSelectedTheme={setSelectedTheme}
+      names={names}
+      addNameField={addNameField}
+      handleNameChange={handleNameChange}
+      ageGroup={ageGroup}
+      setAgeGroup={setAgeGroup}
+      language={language}
+      setLanguage={setLanguage}
+      preview={preview}
+      photo={photo}
+      handlePhotoChange={handlePhotoChange}
+      setPreview={setPreview}
+      setPhoto={setPhoto}
+      handleGenerate={handleGenerate}
+      isGenerating={isGenerating}
+      themes={themes}
+    />
+  );
+}
 
   return (
     <div className="app-container">

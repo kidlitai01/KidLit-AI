@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
+import MobileHeader from "./MobileHeader";
 
 import paperBg from "./assets/middlepage.png";
 import firstPageBg from "./assets/firstpage2.png";
@@ -132,7 +133,9 @@ const DownloadStory = () => {
   };
 
   return (
+    
     <div className="download-container">
+      <MobileHeader />
       <h2>📖 Preview Your Story</h2>
 
       {pdfUrl && (

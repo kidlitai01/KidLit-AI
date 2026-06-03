@@ -42,10 +42,10 @@ button {
 }
 
 
-.content-container {
+.content-containerp {
   display: flex;
   flex-wrap: wrap;
-  height: 530px;
+  height: 560px;
   width: 1300px;
   justify-content: center;
   background-color: #fff8f0;

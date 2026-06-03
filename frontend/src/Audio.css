@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'jellee';
+  src: url('./assets/fonts/Jellee-Roman.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body.audio-theme{
   padding: 1.5rem;
 }
@@ -43,10 +50,12 @@ body.audio-theme{
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-weight: bold;
+  font-family: 'jellee';
 }
 
 /* Story text container */
 .story-paragraph {
+  font-family: 'HeyComic', cursive;
   text-align:justify;
   font-size: 15px;
   line-height: 1.7;

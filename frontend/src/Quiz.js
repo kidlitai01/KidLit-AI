@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Quiz.css';
-import API from "../config";
+import API from "./config";
+import QuizMobile from "./QuizMobile";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -10,6 +11,31 @@ const Quiz = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState('english');
+
+  const [isMobile, setIsMobile] = useState(
+  window.innerWidth <= 1024
+);
+
+useEffect(() => {
+
+  const handleResize = () => {
+    setIsMobile(
+      window.innerWidth <= 1024
+    );
+  };
+
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () =>
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+
+}, []);
 
   useEffect(() => {
     fetchQuiz();
@@ -77,6 +103,22 @@ const Quiz = () => {
     document.body.style.overflow = 'auto';
   };
 }, []);
+
+if (isMobile) {
+  return (
+    <QuizMobile
+      questions={questions}
+      selectedAnswers={selectedAnswers}
+      showResults={showResults}
+      loading={loading}
+      error={error}
+      language={language}
+      handleOptionSelect={handleOptionSelect}
+      handleSubmit={handleSubmit}
+      resetQuiz={resetQuiz}
+    />
+  );
+}
 
 
   return (
