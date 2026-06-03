@@ -30,9 +30,10 @@ const DownloadStory = () => {
   const { title = "My Story", story = "" } = location.state || {};
   const [pdfUrl, setPdfUrl] = useState(null);
 
-  useEffect(() => {
-    generatePDF();
-  }, [title, story]);
+useEffect(() => {
+  generatePDF();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [title, story]);
 
   // ---------- SHADOW FUNCTION ----------
   const drawTextWithShadow = (doc, text, x, y, options = {}) => {

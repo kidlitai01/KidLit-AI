@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './StorybookMobile.css';
 import MobileHeader from "./MobileHeader";
 
@@ -48,7 +48,6 @@ const goToDownload = () => {
   });
 };
 
-const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
 
