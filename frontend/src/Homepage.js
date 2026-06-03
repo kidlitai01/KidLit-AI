@@ -11,7 +11,6 @@ window.matchMedia("(max-width: 1024px)").matches
 );
 
 useEffect(() => {
-document.body.style.overflow = "hidden";
 
 
 const handleResize = () => {
@@ -23,7 +22,6 @@ const handleResize = () => {
 window.addEventListener("resize", handleResize);
 
 return () => {
-  document.body.style.overflow = "auto";
   window.removeEventListener("resize", handleResize);
 };
 
