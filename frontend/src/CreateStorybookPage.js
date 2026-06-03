@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './CreateStorybookPage.css';
+import API from "../config";
 
 const CreateStorybookPage = () => {
   const [selectedTheme, setSelectedTheme] = useState('');
@@ -51,7 +52,6 @@ const CreateStorybookPage = () => {
 
   const isMobile = () => window.innerWidth <= 768;
 
-  const BACKEND_URL = "http://localhost:5000/";
 
 
   const handleGenerate = async () => {
@@ -80,7 +80,7 @@ const CreateStorybookPage = () => {
         const validNames = names.filter(n => n.trim() !== '');
         validNames.forEach(n => formData.append('names[]', n));
 
-        const res = await fetch(`${BACKEND_URL}/api/generate-from-photo`, {
+        const res = await fetch(`${API.storybook}/api/generate-from-photo`, {
           method: 'POST',
           body: formData
         });
@@ -98,7 +98,7 @@ const CreateStorybookPage = () => {
         };
         if (language) body.language = language;
 
-        const res = await fetch(`${BACKEND_URL}/api/generate-story`, {
+        const res = await fetch(`${API.storybook}/api/generate-story`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)

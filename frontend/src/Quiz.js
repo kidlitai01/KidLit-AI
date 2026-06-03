@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Quiz.css';
+import API from "../config";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -26,7 +27,7 @@ const Quiz = () => {
     }
 
     setLoading(true);
-    fetch('http://localhost:5000/api/generate-quiz', {
+    fetch(`${API.storybook}/api/generate-quiz`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ story: storyText, language: lang }),
