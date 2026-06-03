@@ -21,7 +21,6 @@ const Picturebook = () => {
 
 useEffect(() => {
 
-  document.body.style.overflow = "hidden";
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 1024);
@@ -34,7 +33,6 @@ useEffect(() => {
 
   return () => {
 
-    document.body.style.overflow = "auto";
 
     window.removeEventListener(
       "resize",

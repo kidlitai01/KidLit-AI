@@ -97,12 +97,7 @@ useEffect(() => {
   const getText = (en, hi) => (language === 'hindi' ? hi : en);
 
 
-  useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, []);
+
 
 if (isMobile) {
   return (

@@ -108,12 +108,7 @@ const goToDownload = () => {
   }, [currentPageIndex, pages]);
 
 
-  useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, []);
+
 
 
  return (

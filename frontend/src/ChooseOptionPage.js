@@ -11,7 +11,6 @@ const ChooseOptionPage = () => {
   );
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
 
     const handleResize = () => {
       setIsMobile(
@@ -22,7 +21,6 @@ const ChooseOptionPage = () => {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      document.body.style.overflow = "auto";
       window.removeEventListener("resize", handleResize);
     };
   }, []);
